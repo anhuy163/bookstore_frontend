@@ -1,0 +1,28 @@
+{
+  "name": "bookstore_frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.8.5",
+    "antd": "^4.23.3",
+    "clsx": "^1.2.1",
+    "next": "12.3.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-query": "^3.39.2",
+    "react-redux": "^8.0.4",
+    "redux": "^4.2.0"
+  },
+  "devDependencies": {
+    "@redux-devtools/core": "^3.13.1",
+    "@types/node": "18.7.23",
+    "eslint": "8.24.0",
+    "eslint-config-next": "12.3.1"
+  }
+}
