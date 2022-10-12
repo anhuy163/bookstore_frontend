@@ -9,8 +9,14 @@ import {
   GooglePlusOutlined,
 } from "@ant-design/icons";
 import Link from "next/link";
+import { REGISTER_PATH } from "../../constants";
+import { useRouter } from "next/router";
 
 export default function LoginForm() {
+  const router = useRouter();
+  const onFinish = () => {
+    router.push("/");
+  };
   const rules = {
     username: [
       { required: true, message: "Please fill your username" },
@@ -24,7 +30,7 @@ export default function LoginForm() {
   return (
     <FormWrapper className={styles.formWrapper}>
       <Typography className={styles.formTitle}>Yuu Book</Typography>
-      <Form className={styles.container}>
+      <Form className={styles.container} onFinish={onFinish}>
         <Form.Item colon={false} name='username' rules={rules.username}>
           <Input addonBefore={<UserOutlined />} allowClear />
         </Form.Item>
@@ -50,7 +56,7 @@ export default function LoginForm() {
         </Space>
         <div className={styles.registerLink}>
           Don not have an account?{" "}
-          <Link href=''>
+          <Link href={REGISTER_PATH}>
             <a>Register here</a>
           </Link>
         </div>
