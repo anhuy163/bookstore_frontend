@@ -1,7 +1,30 @@
 .header {
-  background-color: white;
-  padding: 0 5%;
+  background-color: #82c6d0;
+  padding: 0 20px;
   width: 100%;
+  .searchArea {
+    align-items: center;
+    display: flex;
+    :global {
+      .ant-input-affix-wrapper {
+        border-radius: 15px !important;
+        width: 99%;
+      }
+      .ant-input-group-addon {
+        background-color: #82c6d0;
+        // margin-left: 25px !important;
+        width: 40px !important;
+      }
+      .ant-input-search-button {
+        width: 40px;
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        border-radius: 50% !important;
+        margin-left: 5px;
+      }
+    }
+  }
   .logo {
     float: left;
     width: 120px;

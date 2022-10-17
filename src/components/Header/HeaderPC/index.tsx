@@ -1,4 +1,4 @@
-import { Menu, Layout, Dropdown, Row, Col, Avatar } from "antd";
+import { Menu, Layout, Dropdown, Row, Col, Avatar, Input } from "antd";
 const { Header } = Layout;
 import styles from "./styles.module.less";
 import "antd/dist/antd.css";
@@ -16,17 +16,13 @@ export default function HeaderPC() {
   return (
     <Header className={styles.header}>
       <Row>
-        <Col flex={18}>
-          <div className={styles.logo}></div>
-          <Menu defaultSelectedKeys={["1"]} mode='horizontal' theme='light'>
-            <Menu.Item key={"1"}>Nav 1</Menu.Item>
-            <Menu.Item key={"2"}>Nav 2</Menu.Item>
-            <Menu.Item key={"3"}>Nav 3</Menu.Item>
-            <Menu.SubMenu title='Sub Menu'>
-              <Menu.Item key={"4"}>Nav 4</Menu.Item>
-              <Menu.Item key={"5"}>Nav 5</Menu.Item>
-            </Menu.SubMenu>
-          </Menu>
+        <Col flex={18} className={styles.searchArea}>
+          <Input.Search
+            placeholder='Tìm kiếm'
+            allowClear
+            size='large'
+            enterButton
+          />
         </Col>
         <Col flex={6}>
           <div className={styles.profileArea}>

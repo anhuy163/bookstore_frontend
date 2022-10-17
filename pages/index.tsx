@@ -1,8 +1,9 @@
 import { Button, Breadcrumb } from "antd";
 import { HomeOutlined } from "@ant-design/icons";
-import LayoutContainer from "../src/containers/Layout/Layout";
+// import LayoutContainer from "../src/containers/Layout";
+// import CardWrapper from "../src/components/CardWrapper";
+import LayoutContainer from "../src/containers/Layout";
 import CardWrapper from "../src/components/CardWrapper";
-
 export default function Home() {
   return (
     <div>

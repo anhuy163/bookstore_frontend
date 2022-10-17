@@ -1,5 +1,5 @@
 import HeaderPC from "./HeaderPC";
-import HeaderMB from "./HeaderMB/HeaderMB";
+import HeaderMB from "./HeaderMB";
 import useWindowDimensions from "../../app/hooks/useWindowDimensions";
 import { useState } from "react";
 

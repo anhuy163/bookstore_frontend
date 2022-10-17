@@ -5,7 +5,7 @@ import {
   LockOutlined,
   GooglePlusOutlined,
 } from "@ant-design/icons";
-import FormWrapper from "../FormWrapper/FormWrapper";
+import FormWrapper from "../FormWrapper";
 import styles from "./styles.module.less";
 import Link from "next/link";
 import { useForm } from "antd/lib/form/Form";

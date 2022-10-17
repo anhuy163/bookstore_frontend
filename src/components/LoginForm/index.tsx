@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Form, Input, Space, Typography } from "antd";
 import "antd/dist/antd.css";
-import FormWrapper from "../FormWrapper/FormWrapper";
+import FormWrapper from "../FormWrapper";
 import styles from "./styles.module.less";
 import {
   UserOutlined,
