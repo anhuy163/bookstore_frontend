@@ -1,0 +1,56 @@
+.infoWrapper {
+  padding: 0 20%;
+  .avatar {
+    width: 150px;
+    margin: auto;
+    margin-bottom: 20px;
+  }
+  .buttonArea {
+    margin: auto;
+    width: 90px;
+    :global {
+      .ant-btn {
+        border: none;
+        background-color: rgba(105, 190, 201, 0.69);
+        color: white;
+        font-size: 16px;
+        height: 36px;
+        font-weight: 500;
+        &:hover {
+          background-color: rgba(105, 190, 201, 1);
+        }
+      }
+    }
+  }
+  .formWrapper {
+    :global {
+      .ant-form-item-label {
+        background-color: rgba(105, 190, 201, 0.5);
+        margin-right: 10px;
+        padding: 0 10px;
+        text-align: center;
+        max-height: 32px;
+        min-width: 150px;
+        & > label {
+          color: white;
+          font-size: 16px;
+          font-weight: 400;
+        }
+      }
+      .ant-form-item-label
+        > label.ant-form-item-required:not(.ant-form-item-required-mark-optional):before {
+        content: "";
+      }
+      .ant-form-item-label
+        > label.ant-form-item-required:not(.ant-form-item-required-mark-optional):after {
+        display: inline-block;
+        margin-right: 1px;
+        color: #ff4d4f;
+        font-size: 14px;
+        font-family: SimSun, sans-serif;
+        line-height: 1;
+        content: "*";
+      }
+    }
+  }
+}

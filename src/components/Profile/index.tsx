@@ -7,6 +7,7 @@ import {
   CopyOutlined,
 } from "@ant-design/icons";
 import styles from "./styles.module.less";
+import UserInfoContainer from "../../containers/UserInfo";
 
 export default function Profile() {
   const tabItems = [
@@ -18,7 +19,7 @@ export default function Profile() {
         </span>
       ),
       key: "1",
-      children: <>Hồ sơ người dùng</>,
+      children: <UserInfoContainer />,
     },
     {
       label: (

@@ -1,0 +1,108 @@
+.detailWrapper {
+  display: flex;
+  .bookDescription {
+    width: 70%;
+    .bookImageAndInfo {
+      display: flex;
+      width: 100%;
+      .bookImage {
+        width: 35%;
+      }
+      .bookInfo {
+        padding: 0 20px;
+        width: 65%;
+        .bookTitle {
+          font-size: 40px;
+          font-weight: bolder;
+        }
+        .bookAuthor {
+          font-size: 28px;
+          color: #828285;
+        }
+        .bookPrice {
+          margin-top: 30px;
+          font-size: 36px;
+          font-weight: 700;
+          color: #b03737;
+        }
+        .buttonArea {
+          margin-top: 30px;
+          width: 50%;
+          .cmtAndSaveBtns {
+            width: 100%;
+            justify-content: space-between;
+            display: flex;
+            .commentButton,
+            .saveButton {
+              width: 48%;
+              border-radius: 12px;
+              border: 1px solid #82c6d0;
+              color: #82c6d0;
+              height: 40px;
+              font-size: 16px;
+              //   transition: all 0.5s ease;
+              //   &:hover {
+              //     box-shadow: 1px 1px 1px black;
+              //   }
+            }
+          }
+          .addButton {
+            margin-top: 10px;
+            width: 100%;
+            border-radius: 12px;
+            border: none;
+            background-color: #82c6d0af;
+            padding: 10px 20px;
+            height: 48px;
+            color: white;
+            font-size: 16px;
+            font-weight: 500;
+            &:hover {
+              background-color: #82c6d0;
+            }
+          }
+        }
+      }
+    }
+    .bookDetail {
+      margin-top: 15px;
+      padding: 10px;
+      .bookDetailTitle {
+        font-size: 40px;
+        font-weight: bolder;
+      }
+    }
+    .bookIntroduction,
+    .bookBrief {
+      font-size: 16px;
+      color: #535355;
+    }
+  }
+  .bookComment {
+    padding: 0 10px;
+    width: 30%;
+    .bookCommentTitle {
+      font-size: 40px;
+      font-weight: bolder;
+    }
+    .commentArea {
+      width: 100%;
+      margin-top: 20px;
+      .commentCard {
+        max-width: 450px;
+      }
+      :global {
+        .ant-pagination {
+          display: flex;
+          justify-content: center;
+        }
+        .ant-list-item {
+          padding: 0;
+        }
+        .ant-card-body {
+          padding: 15px 0;
+        }
+      }
+    }
+  }
+}

@@ -2,6 +2,8 @@ import { Menu, Layout, Dropdown, Row, Col, Avatar, Input } from "antd";
 const { Header } = Layout;
 import styles from "./styles.module.less";
 import "antd/dist/antd.css";
+import UserAvatar from "../../UserAvatar";
+import { AVATAR_SIZE } from "../../../constants";
 
 export default function HeaderPC() {
   const profileMenu = () => {
@@ -27,7 +29,7 @@ export default function HeaderPC() {
         <Col flex={6}>
           <div className={styles.profileArea}>
             <div>
-              <Avatar />
+              <UserAvatar size={AVATAR_SIZE.small} />
             </div>
             <div>
               <Dropdown overlay={profileMenu} trigger={["click"]}>

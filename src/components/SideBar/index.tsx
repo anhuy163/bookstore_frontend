@@ -4,6 +4,8 @@ import {
   HomeOutlined,
   ShoppingCartOutlined,
   InfoCircleOutlined,
+  PercentageOutlined,
+  MenuOutlined,
 } from "@ant-design/icons";
 import styles from "./styles.module.less";
 import Link from "next/link";
@@ -25,21 +27,46 @@ export default function Sidebar() {
   };
 
   return (
-    <Sider collapsible className={styles.sider}>
-      <div className={styles.logo}>Logo</div>
+    <Sider className={styles.sider}>
+      <div className={styles.siderDecor}></div>
+      <div className={styles.logo}>UETBOOKS</div>
       <Menu mode='inline' theme='light' defaultSelectedKeys={[router.pathname]}>
-        <Menu.Item icon={<HomeOutlined />} key={keyMapping.home}>
-          <Link href={"/"} shallow={false}>
-            <a className={styles.menuTitle}>Trang chủ</a>
-          </Link>
+        <Menu.Item
+          icon={<HomeOutlined />}
+          key={keyMapping.home}
+          onClick={() => router.push("/")}>
+          TRANG CHỦ
         </Menu.Item>
-        <Menu.SubMenu title='Cá nhân' icon={<InfoCircleOutlined />}>
-          <Menu.Item key={keyMapping.profile} icon={<UserOutlined />}>
-            <Link href={"/me"} shallow={false}>
-              <a className={styles.menuTitle}>Thông tin</a>
-            </Link>
+        <Menu.Item
+          icon={<PercentageOutlined />}
+          // key={keyMapping.home}
+          // onClick={() => router.push("/")}
+        >
+          KHUYẾN MÃI
+        </Menu.Item>
+        <Menu.Item icon={<InfoCircleOutlined />}>GIỚI THIỆU</Menu.Item>
+
+        <Menu.SubMenu title='CÁ NHÂN' icon={<UserOutlined />}>
+          <Menu.Item
+            key={keyMapping.profile}
+            // icon={<InfoCircleOutlined />}
+            onClick={() => router.push("/me")}>
+            THÔNG TIN
           </Menu.Item>
-          <Menu.Item icon={<ShoppingCartOutlined />}>Giỏ hàng</Menu.Item>
+          <Menu.Item>ĐƠN HÀNG</Menu.Item>
+        </Menu.SubMenu>
+
+        <Menu.SubMenu title='THỂ LOẠI' icon={<MenuOutlined />}>
+          <Menu.Item>TẤT CẢ</Menu.Item>
+          <Menu.Item>GIÁO DỤC</Menu.Item>
+          <Menu.Item>ẨM THỤC</Menu.Item>
+          <Menu.Item>VĂN PHÒNG</Menu.Item>
+          <Menu.Item>DU LỊCH</Menu.Item>
+          <Menu.Item>CHÍNH TRỊ</Menu.Item>
+          <Menu.Item>GIÁO KHOA</Menu.Item>
+          <Menu.Item>TRI THỨC</Menu.Item>
+          <Menu.Item>TRUYỆN TRANH</Menu.Item>
+          <Menu.Item>NGÔN NGỮ</Menu.Item>
         </Menu.SubMenu>
       </Menu>
     </Sider>
