@@ -1,11 +1,30 @@
-import { Menu, Layout, Dropdown, Row, Col, Avatar, Input } from "antd";
+import {
+  Menu,
+  Layout,
+  Dropdown,
+  Row,
+  Col,
+  Avatar,
+  Input,
+  Badge,
+  Typography,
+} from "antd";
+import { ShoppingCartOutlined } from "@ant-design/icons";
 const { Header } = Layout;
 import styles from "./styles.module.less";
 import "antd/dist/antd.css";
 import UserAvatar from "../../UserAvatar";
-import { AVATAR_SIZE } from "../../../constants";
+import { AVATAR_SIZE, CART_PATH } from "../../../constants";
+import { useAppSelector, useAppDispatch } from "../../../app/hooks/useRedux";
+
+import Link from "next/link";
 
 export default function HeaderPC() {
+  const cart = useAppSelector((state) => state.cart);
+  // console.log(cart);
+
+  const dispatch = useAppDispatch();
+
   const profileMenu = () => {
     return (
       <Menu mode='horizontal' theme='light'>
@@ -28,6 +47,14 @@ export default function HeaderPC() {
         </Col>
         <Col flex={6}>
           <div className={styles.profileArea}>
+            <Link href={CART_PATH}>
+              <div className={styles.cart}>
+                <Typography className={styles.cartTitle}>Giỏ hàng</Typography>
+                <Badge count={cart.amount} overflowCount={99}>
+                  <ShoppingCartOutlined />
+                </Badge>
+              </div>
+            </Link>
             <div>
               <UserAvatar size={AVATAR_SIZE.small} />
             </div>

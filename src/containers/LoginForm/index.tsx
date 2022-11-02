@@ -1,18 +1,19 @@
 import LoginForm from "../../components/LoginForm";
 import axios from "axios";
 import { useRouter } from "next/router";
+import useAuth from "../../app/hooks/useAuth";
+import { HOME_PATH } from "../../constants";
 
 export default function LoginFormContainer() {
+  const { loading: isLoggingIn, login: handleOnLogin } = useAuth();
   const router = useRouter();
   const handleOnSubmit = async (value) => {
     console.log(value);
-    await axios({
-      method: "post",
-      url: "http://192.168.1.190/authenticate",
-      data: { email: value?.email, password: value?.password },
-    })
-      .then(() => router.push("/"))
+    handleOnLogin({ email: value?.email, password: value?.password })
+      .then(() => {
+        router.push(HOME_PATH);
+      })
       .catch((err) => console.log(err));
   };
-  return <LoginForm onFinish={handleOnSubmit} />;
+  return <LoginForm loading={isLoggingIn} onFinish={handleOnSubmit} />;
 }

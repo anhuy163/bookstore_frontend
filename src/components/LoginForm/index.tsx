@@ -13,14 +13,9 @@ import { REGISTER_PATH } from "../../constants";
 import { useRouter } from "next/router";
 import { useForm } from "antd/lib/form/Form";
 
-export default function LoginForm(props) {
-  // console.log(onFinish);
-
+export default function LoginForm({ loading, ...props }) {
   const [form] = useForm();
   const router = useRouter();
-
-  // const onFinish = (value) => console.log(value);
-
   const rules = {
     email: [
       { required: true, message: "Please fill your username" },
@@ -32,7 +27,7 @@ export default function LoginForm(props) {
     ],
   };
   return (
-    <FormWrapper className={styles.formWrapper}>
+    <FormWrapper loading={loading} className={styles.formWrapper}>
       <Typography className={styles.formTitle}>Yuu Book</Typography>
       <Form className={styles.container} {...props}>
         <Form.Item colon={false} name='email' rules={rules.email}>

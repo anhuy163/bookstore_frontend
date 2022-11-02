@@ -1,27 +1,36 @@
 import styles from "./styles.module.less";
-import {
-  Image,
-  Typography,
-  Rate,
-  Button,
-  Card,
-  List,
-  Space,
-  Avatar,
-} from "antd";
-import {
-  CommentOutlined,
-  CopyOutlined,
-  StarOutlined,
-  LikeOutlined,
-  MessageOutlined,
-} from "@ant-design/icons";
+import { Image, Typography, Rate, Button, Card, List, InputNumber } from "antd";
+import { CommentOutlined, CopyOutlined } from "@ant-design/icons";
 import UserAvatar from "../UserAvatar";
 import { AVATAR_SIZE } from "../../constants";
-import React from "react";
+import React, { useState } from "react";
 
-export default function BookDetail() {
-  const data = Array.from({ length: 23 }).map((_, i) => ({
+export default function BookDetail({ data = undefined, onAdd }) {
+  const [number, setNumber] = useState<number>(1);
+  const testBook = {
+    id: "1",
+    value: 150000,
+    author: "Lily Smith",
+    title: "Summer Holiday",
+    rate: 3.5,
+    status: true,
+    cover:
+      "https://pub-static.fotor.com/assets/projects/pages/dddda0b59fb9433eb53e7174981c8b67/blue-minimal-novel-cover-6e355184dc3545c6bec6a9f618f83e0d.jpg",
+    intro:
+      "Timeless lessons on wealth, greed, and happiness doing well with money isn’t necessarily about what you know. It’s about how you behave. And behavior is hard to teach, even to really smart people.",
+    brief:
+      "Timeless lessons on wealth, greed, and happiness doing well with money isn’t necessarily about what you know. It’s about how you behave. And behavior is hard to teach, even to really smart people. Timeless lessons on wealth, greed, and happiness doing well with money isn’t necessarily about what you know. It’s about how you behave. And behavior is hard to teach, even to really smart people.Timeless lessons on wealth, greed, and happiness doing well with money isn’t necessarily about what you know. It’s about how you behave. And behavior is hard to teach, even to really smart people. And behavior is hard to teach, even to really smart people.Timeless lessons on wealth, greed, and happiness doing well with money isn’t necessarily about what you know. It’s about how you behave. And behavior is hard to teach, even to really smart people.",
+  };
+
+  const onNumberChange = (value) => {
+    setNumber(value);
+  };
+
+  const handleOnAddBook = () => {
+    onAdd(testBook, number);
+  };
+
+  const dummyData = Array.from({ length: 23 }).map((_, i) => ({
     title: `ant design part ${i}`,
     rate: 1.5,
     content: "Nothing interesting Nothing interesting Nothing interesting",
@@ -31,23 +40,18 @@ export default function BookDetail() {
       <div className={styles.bookDescription}>
         <div className={styles.bookImageAndInfo}>
           <div className={styles.bookImage}>
-            <Image
-              width={"100%"}
-              // height={"600px"}
-              src='https://pub-static.fotor.com/assets/projects/pages/dddda0b59fb9433eb53e7174981c8b67/blue-minimal-novel-cover-6e355184dc3545c6bec6a9f618f83e0d.jpg'
-            />
+            <Image width={"100%"} src={testBook.cover} />
           </div>
           <div className={styles.bookInfo}>
             <Typography className={styles.bookTitle}>Summer Holiday</Typography>
             <Typography className={styles.bookAuthor}>Lily Smith</Typography>
-            <Rate value={3.5} allowHalf disabled />
+            <Rate value={testBook.rate} allowHalf disabled />
             <Typography className={styles.bookIntroduction}>
-              Timeless lessons on wealth, greed, and happiness doing well with
-              money isn’t necessarily about what you know. It’s about how you
-              behave. And behavior is hard to teach, even to really smart
-              people.
+              {testBook.intro}
             </Typography>
-            <Typography className={styles.bookPrice}>150.000 VND</Typography>
+            <Typography className={styles.bookPrice}>
+              {testBook.value} VND
+            </Typography>
 
             <div className={styles.buttonArea}>
               <div className={styles.cmtAndSaveBtns}>
@@ -60,7 +64,17 @@ export default function BookDetail() {
                   Lưu
                 </Button>
               </div>
-              <Button className={styles.addButton}>Thêm vào giỏ hàng</Button>
+              <div className={styles.addArea}>
+                <InputNumber
+                  className={styles.inputNumber}
+                  min={1}
+                  defaultValue={1}
+                  onChange={onNumberChange}
+                />
+                <Button className={styles.addButton} onClick={handleOnAddBook}>
+                  Thêm vào giỏ hàng
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -69,19 +83,7 @@ export default function BookDetail() {
             Chi tiết về cuốn sách
           </Typography>
           <Typography.Text className={styles.bookBrief}>
-            Timeless lessons on wealth, greed, and happiness doing well with
-            money isn’t necessarily about what you know. It’s about how you
-            behave. And behavior is hard to teach, even to really smart people.
-            Timeless lessons on wealth, greed, and happiness doing well with
-            money isn’t necessarily about what you know. It’s about how you
-            behave. And behavior is hard to teach, even to really smart
-            people.Timeless lessons on wealth, greed, and happiness doing well
-            with money isn’t necessarily about what you know. It’s about how you
-            behave. And behavior is hard to teach, even to really smart people.
-            And behavior is hard to teach, even to really smart people.Timeless
-            lessons on wealth, greed, and happiness doing well with money isn’t
-            necessarily about what you know. It’s about how you behave. And
-            behavior is hard to teach, even to really smart people.
+            {testBook.brief}
           </Typography.Text>
         </div>
       </div>
@@ -100,7 +102,7 @@ export default function BookDetail() {
               },
               pageSize: 5,
             }}
-            dataSource={data}
+            dataSource={dummyData}
             renderItem={(item) => (
               <List.Item key={item.title}>
                 <Card className={styles.commentCard} bordered={false}>

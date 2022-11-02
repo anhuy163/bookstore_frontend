@@ -1,18 +1,27 @@
 .bookCard {
   .bookCover {
-    width: 120px;
+    width: 140px;
+    height: 140px;
+    object-fit: contain;
     margin: auto;
   }
   .bookTitle {
     color: #53a4af;
-    font-size: 16px;
+    font-size: 20px;
     margin: 5px 0 0 0;
     text-align: center;
     word-wrap: normal;
     font-weight: 500;
+    &:hover {
+      cursor: pointer;
+    }
   }
   .bookAuthor {
     text-align: center;
+    &:hover {
+      cursor: pointer;
+      color: rgb(253, 55, 55);
+    }
   }
   .bookPrice {
     text-align: center;

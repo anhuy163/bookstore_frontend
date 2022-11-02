@@ -26,13 +26,34 @@
     }
   }
   .logo {
-    float: left;
+    // float: left;
     width: 120px;
     height: 31px;
     margin: 16px 24px 16px 0;
     background-color: gray;
   }
   .profileArea {
+    .cart {
+      background-color: #82c6d0;
+      padding: 0 25px;
+      border-radius: 15px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      .cartTitle {
+        font-size: 18px;
+        color: white;
+        font-weight: 500;
+      }
+
+      :global {
+        .anticon-shopping-cart {
+          font-size: 28px;
+          color: white;
+        }
+      }
+    }
     display: flex;
     align-items: center;
     justify-content: space-around;
