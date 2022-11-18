@@ -4,6 +4,7 @@ import "antd/dist/antd.less";
 import NextNProgress from "nextjs-progressbar";
 import "../public/styles.css";
 import { QueryClientProvider, QueryClient } from "react-query";
+import RouteGuard from "../src/containers/RouteGuard";
 
 function MyApp({ Component, pageProps }) {
   const queryClient = new QueryClient();
@@ -11,7 +12,9 @@ function MyApp({ Component, pageProps }) {
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         {/* <NextNProgress /> */}
-        <Component {...pageProps} />
+        <RouteGuard>
+          <Component {...pageProps} />
+        </RouteGuard>
       </Provider>
     </QueryClientProvider>
   );

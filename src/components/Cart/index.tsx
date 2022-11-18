@@ -1,4 +1,14 @@
-import { Table, Typography, Image, Checkbox, Button, Rate } from "antd";
+import {
+  Table,
+  Typography,
+  Image,
+  Checkbox,
+  Button,
+  Rate,
+  InputNumber,
+  Form,
+  Input,
+} from "antd";
 import {} from "@ant-design/icons";
 import { formatMoney } from "../../app/helpers/moneyhelper";
 import FormWrapper from "../FormWrapper";
@@ -6,11 +16,23 @@ import { dummyBookData } from "../../constants";
 import styles from "./styles.module.less";
 import { AlignType, FixedType } from "rc-table/lib/interface";
 import { useAppSelector } from "../../app/hooks/useRedux";
+import { useState } from "react";
 
 export default function Cart() {
   const cart = useAppSelector((state) => state.cart);
-  console.log(cart);
-  console.log(dummyBookData);
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+  console.log(selectedRowKeys);
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: (selectedRowKeys) => {
+      setSelectedRowKeys(selectedRowKeys);
+    },
+  };
+
+  const handleOnBookUpdate = (value) => {
+    console.log(value);
+  };
 
   const generateColumns = () => {
     const columns = [
@@ -37,6 +59,25 @@ export default function Cart() {
         dataIndex: "amount",
         width: 70,
         align: "center" as AlignType,
+        render: (_, record) => {
+          return (
+            <div>
+              <Form
+                className={styles.updateForm}
+                initialValues={{ id: record.id, amount: record.amount }}
+                colon={false}
+                onFinish={handleOnBookUpdate}>
+                <Form.Item name={"id"} hidden>
+                  <Input />
+                </Form.Item>
+                <Form.Item name={"amount"}>
+                  <InputNumber />
+                </Form.Item>
+                <Button htmlType='submit'>Cap nhat</Button>
+              </Form>
+            </div>
+          );
+        },
         sorter: (a, b) => a.amount - b.amount,
       },
       {
@@ -45,8 +86,8 @@ export default function Cart() {
         align: "center" as AlignType,
         width: 80,
         render: (value, record) => {
-          console.log(record);
-          return <Checkbox checked={value} />;
+          // console.log(record);
+          return <Checkbox defaultChecked={value} />;
         },
         filters: [
           {
@@ -61,25 +102,27 @@ export default function Cart() {
         onFilter: (value, record) => record.status === value,
       },
       {
-        title: "Thành tiền",
+        title: "Giá",
         width: 150,
         align: "center" as AlignType,
         render: (_, record) => (
           <Typography className={styles.productValue}>
-            {formatMoney(record.amount * record.value)}
+            {formatMoney(record.value)}
           </Typography>
         ),
       },
-      {
-        title: "Tùy chọn",
-        key: "action",
-        width: 100,
-        fixed: "right" as FixedType,
-        align: "center" as AlignType,
-        render: (_, record) => (
-          <Button className={styles.cartDeleteBtn}>Xóa</Button>
-        ),
-      },
+      // {
+      //   title: "Tùy chọn",
+      //   key: "action",
+      //   width: 100,
+      //   fixed: "right" as FixedType,
+      //   align: "center" as AlignType,
+      //   render: (_, record) => (
+      //     <Button className={styles.cartDeleteBtn} onClick={handleOnBookUpdate}>
+      //       Cap nhat
+      //     </Button>
+      //   ),
+      // },
     ];
     return columns;
   };
@@ -87,8 +130,16 @@ export default function Cart() {
   return (
     <div className={styles.cartTable}>
       <Typography className={styles.cartTitle}>Giỏ hàng của bạn</Typography>
+      <Button
+        type='primary'
+        disabled={selectedRowKeys.length ? false : true}
+        className={styles.deleteBtn}>
+        Xóa
+      </Button>
       <FormWrapper>
         <Table
+          rowKey={"id"}
+          rowSelection={rowSelection}
           locale={{
             triggerDesc: "Nhấn để sắp xếp giảm dần",
             triggerAsc: "Nhấn để sắp xếp tăng dần",

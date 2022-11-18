@@ -8,25 +8,31 @@ import Sidebar from "../../components/SideBar";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import LoadingScreen from "../../components/LoadingScreen";
-
+import { useAppDispatch } from "../../app/hooks/useRedux";
+import { deleteUser, setUser } from "../../app/redux/slices/userSlice";
 const { Content, Footer } = Layout;
 
 const LayoutContainer = ({ title, children }) => {
-  const router = useRouter();
-  const [directing, setDirecting] = useState(true);
-  const onDirecting = () => {
-    setDirecting(false);
-  };
-  useEffect(() => {
-    const directTingTimeout = setTimeout(onDirecting, 500);
-    () => directTingTimeout;
-    const handleStart = (url) => url !== router.asPath && setDirecting(true);
-    router.events.on("routeChangeStart", handleStart);
-    return () => clearTimeout(directTingTimeout);
-  }, []);
-  return !!directing ? (
-    <LoadingScreen />
-  ) : (
+  // const dispatch = useAppDispatch();
+  // const router = useRouter();
+  // const [directing, setDirecting] = useState(true);
+
+  // const onDirecting = () => {
+  //   setDirecting(false);
+  // };
+  // useEffect(() => {
+  //   if (localStorage.getItem("currentUser")) {
+  //     dispatch(setUser(JSON.parse(localStorage.getItem("currentUser"))));
+  //   } else {
+  //     dispatch(deleteUser());
+  //   }
+  //   const directTingTimeout = setTimeout(onDirecting, 500);
+  //   () => directTingTimeout;
+  //   const handleStart = (url) => url !== router.asPath && setDirecting(true);
+  //   router.events.on("routeChangeStart", handleStart);
+  //   return () => clearTimeout(directTingTimeout);
+  // }, [router.pathname, router.query]);
+  return (
     <>
       <Head>
         <title>{title}</title>

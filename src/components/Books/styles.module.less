@@ -1,0 +1,39 @@
+.listBooksWrapper {
+  .listBooksTitle {
+    font-size: 50px;
+    font-weight: 500;
+    color: #29bfd3;
+    text-align: center;
+    margin-bottom: 30px;
+    text-shadow: 1px 2px 8px rgba(136, 107, 100, 0.84);
+  }
+  .noDataTitle {
+    color: #29bfd3;
+    font-size: 20px;
+  }
+  .listBooks {
+    :global {
+      .ant-list-items {
+        display: grid;
+        grid-template-columns: auto auto auto auto auto;
+        column-gap: 10px;
+        row-gap: 20px;
+        // background-color: blue;
+        padding: 20px 0;
+      }
+      .ant-pagination {
+        text-align: center;
+      }
+    }
+
+    .bookWrapper {
+      padding: 20px 20px;
+      background-color: white;
+      border-radius: 15px;
+      width: 300px;
+      height: 325px;
+      margin: auto;
+      box-shadow: 2px 0px 12px 0px rgba(0, 0, 0, 0.45);
+    }
+  }
+}

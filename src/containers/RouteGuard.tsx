@@ -1,4 +1,43 @@
 import React from "react";
+import LoadingScreen from "../components/LoadingScreen";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import { useAppDispatch, useAppSelector } from "../app/hooks/useRedux";
+import { deleteUser, setUser } from "../app/redux/slices/userSlice";
+import useQueryGetUserProfile from "../app/hooks/useQueryGetUserProfile";
+
+export default function RouteGuard({ children }) {
+  const { data: currentUser, loading: isFetchingProfile } =
+    useQueryGetUserProfile(
+      typeof window !== "undefined" && !!localStorage.getItem("currentUser")
+    );
+
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+  const [directing, setDirecting] = useState(true);
+  const onDirecting = () => {
+    setDirecting(false);
+  };
+
+  useEffect(() => {
+    if (!!localStorage.getItem("currentUser")) {
+      !!currentUser &&
+        localStorage.setItem("currentUser", JSON.stringify(currentUser));
+      //   localStorage.setItem("currentUser", currentUser);
+      //   fetchData();
+      dispatch(setUser(JSON.parse(localStorage.getItem("currentUser"))));
+    } else {
+      dispatch(deleteUser());
+    }
+    const directTingTimeout = setTimeout(onDirecting, 500);
+    () => directTingTimeout;
+    const handleStart = (url) => url !== router.asPath && setDirecting(true);
+    router.events.on("routeChangeStart", handleStart);
+    return () => clearTimeout(directTingTimeout);
+  }, [router.pathname, router.query, router.asPath]);
+
+  return <>{directing || isFetchingProfile ? <LoadingScreen /> : children}</>;
+}
 
 // import { Auth, Hub } from 'aws-amplify';
 

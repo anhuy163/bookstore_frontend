@@ -4,30 +4,43 @@ import { CommentOutlined, CopyOutlined } from "@ant-design/icons";
 import UserAvatar from "../UserAvatar";
 import { AVATAR_SIZE } from "../../constants";
 import React, { useState } from "react";
+import { formatMoney } from "../../app/helpers/moneyhelper";
+import { useAppSelector } from "../../app/hooks/useRedux";
+import { useRouter } from "next/router";
+import { LOGIN_PATH } from "../../constants";
 
-export default function BookDetail({ data = undefined, onAdd }) {
+export type Comment = {
+  username?: string;
+  userAva?: string;
+  title?: string;
+  star?: number;
+  content?: string;
+};
+
+export default function BookDetail({
+  defaultValues = undefined,
+  onAdd,
+  comments,
+}) {
+  const user = useAppSelector((state) => state.user);
+  const cart = useAppSelector((state) => state.cart);
+  // console.log(cart);
+  // console.log(comments);
+
+  const router = useRouter();
   const [number, setNumber] = useState<number>(1);
-  const testBook = {
-    id: "1",
-    value: 150000,
-    author: "Lily Smith",
-    title: "Summer Holiday",
-    rate: 3.5,
-    status: true,
-    cover:
-      "https://pub-static.fotor.com/assets/projects/pages/dddda0b59fb9433eb53e7174981c8b67/blue-minimal-novel-cover-6e355184dc3545c6bec6a9f618f83e0d.jpg",
-    intro:
-      "Timeless lessons on wealth, greed, and happiness doing well with money isn’t necessarily about what you know. It’s about how you behave. And behavior is hard to teach, even to really smart people.",
-    brief:
-      "Timeless lessons on wealth, greed, and happiness doing well with money isn’t necessarily about what you know. It’s about how you behave. And behavior is hard to teach, even to really smart people. Timeless lessons on wealth, greed, and happiness doing well with money isn’t necessarily about what you know. It’s about how you behave. And behavior is hard to teach, even to really smart people.Timeless lessons on wealth, greed, and happiness doing well with money isn’t necessarily about what you know. It’s about how you behave. And behavior is hard to teach, even to really smart people. And behavior is hard to teach, even to really smart people.Timeless lessons on wealth, greed, and happiness doing well with money isn’t necessarily about what you know. It’s about how you behave. And behavior is hard to teach, even to really smart people.",
-  };
 
   const onNumberChange = (value) => {
     setNumber(value);
   };
 
   const handleOnAddBook = () => {
-    onAdd(testBook, number);
+    if (!!user) {
+      onAdd(defaultValues, number);
+    } else {
+      const pathName = router.query;
+      router.push(`${LOGIN_PATH}?bookId=${pathName.id}`);
+    }
   };
 
   const dummyData = Array.from({ length: 23 }).map((_, i) => ({
@@ -40,17 +53,21 @@ export default function BookDetail({ data = undefined, onAdd }) {
       <div className={styles.bookDescription}>
         <div className={styles.bookImageAndInfo}>
           <div className={styles.bookImage}>
-            <Image width={"100%"} src={testBook.cover} />
+            <Image width={"100%"} src={defaultValues?.avatar} />
           </div>
           <div className={styles.bookInfo}>
-            <Typography className={styles.bookTitle}>Summer Holiday</Typography>
-            <Typography className={styles.bookAuthor}>Lily Smith</Typography>
-            <Rate value={testBook.rate} allowHalf disabled />
+            <Typography className={styles.bookTitle}>
+              {defaultValues?.name}
+            </Typography>
+            <Typography className={styles.bookAuthor}>
+              {defaultValues?.author?.name}
+            </Typography>
+            <Rate value={defaultValues?.starAvg} allowHalf disabled />
             <Typography className={styles.bookIntroduction}>
-              {testBook.intro}
+              {defaultValues?.mainDe}
             </Typography>
             <Typography className={styles.bookPrice}>
-              {testBook.value} VND
+              {formatMoney(defaultValues?.price)}
             </Typography>
 
             <div className={styles.buttonArea}>
@@ -83,7 +100,7 @@ export default function BookDetail({ data = undefined, onAdd }) {
             Chi tiết về cuốn sách
           </Typography>
           <Typography.Text className={styles.bookBrief}>
-            {testBook.brief}
+            {defaultValues?.desc}
           </Typography.Text>
         </div>
       </div>
@@ -93,6 +110,7 @@ export default function BookDetail({ data = undefined, onAdd }) {
         </Typography>
         <div className={styles.commentArea}>
           <List
+            locale={{ emptyText: "Không có bình luận nào" }}
             split={false}
             itemLayout='vertical'
             size='large'
@@ -102,16 +120,27 @@ export default function BookDetail({ data = undefined, onAdd }) {
               },
               pageSize: 5,
             }}
-            dataSource={dummyData}
+            dataSource={comments as Array<Comment>}
             renderItem={(item) => (
               <List.Item key={item.title}>
                 <Card className={styles.commentCard} bordered={false}>
                   <Card.Meta
-                    avatar={<UserAvatar size={AVATAR_SIZE.small} />}
-                    title={item.title}
+                    avatar={
+                      <UserAvatar size={AVATAR_SIZE.small} src={item.userAva} />
+                    }
+                    title={
+                      <Typography
+                        style={{ fontWeight: "500", fontSize: "20px" }}>
+                        {item.username}
+                      </Typography>
+                    }
                     description={
                       <div>
-                        <Rate value={item.rate} disabled />
+                        <Rate value={item.star} disabled />
+                        <Typography
+                          style={{ fontWeight: "500", fontSize: "18px" }}>
+                          {item.title}
+                        </Typography>
                         <Typography>{item.content}</Typography>
                       </div>
                     }

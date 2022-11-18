@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 export default function MyBreadcrumb({ paths = [] }) {
   const router = useRouter();
   const pathNames = router.asPath.split("/");
-  console.log(pathNames);
+  // console.log(pathNames);
 
   return (
     <Breadcrumb style={{ padding: "10px 0" }}>

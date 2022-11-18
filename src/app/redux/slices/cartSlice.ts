@@ -4,7 +4,7 @@ import { AppState } from "../store";
 export type Book = {
   id: String;
   title: String;
-  value: number;
+  price: number;
   author: String;
   cover: String;
   intro: String;
@@ -39,7 +39,7 @@ export const cartSlice = createSlice({
       } else {
         state.items.push({ ...payload.item, amount: payload.number });
       }
-      state.value += payload.item.value * payload.number;
+      state.value += payload.item.price * payload.number;
       state.amount += payload.number;
     },
   },

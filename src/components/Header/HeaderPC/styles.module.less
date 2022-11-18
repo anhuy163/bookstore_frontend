@@ -32,6 +32,29 @@
     margin: 16px 24px 16px 0;
     background-color: gray;
   }
+  .loginBtnArea {
+    // max-width: 300px;
+    margin: auto;
+    padding: 5px 0 0 0;
+    // display: flex;
+    // align-items: center;
+    justify-content: center;
+    .loginBtn {
+      float: right;
+      background-color: #82c6d0cb;
+      border: none;
+      width: 200px;
+      height: 50px;
+      border-radius: 15px;
+      color: white;
+      font-size: 20px;
+      font-weight: 500;
+      &:hover {
+        background-color: #82c6d0;
+      }
+      // margin-left: 30px;
+    }
+  }
   .profileArea {
     .cart {
       background-color: #82c6d0;
@@ -40,6 +63,7 @@
       height: 56px;
       display: flex;
       align-items: center;
+      margin: 0 45px 0 45px;
       cursor: pointer;
       .cartTitle {
         font-size: 18px;
@@ -56,8 +80,19 @@
     }
     display: flex;
     align-items: center;
-    justify-content: space-around;
-    .userName:hover {
+    // justify-content: space-around;
+    .userNameArea {
+      .userName {
+        font-size: 20px;
+        font-weight: 500;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
+    .avatar {
+      margin-right: 20px;
+      margin-left: 40px;
       cursor: pointer;
     }
   }

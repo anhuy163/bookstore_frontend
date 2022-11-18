@@ -6,7 +6,7 @@ import CartContainer from "../../src/containers/Cart";
 export default function CartPage() {
   return (
     <LayoutContainer title='Giỏ hàng'>
-      <MyBreadcrumb />
+      {/* <MyBreadcrumb /> */}
       <CardWrapper>
         <CartContainer />
       </CardWrapper>

@@ -5,6 +5,7 @@ import CardWrapper from "../../src/components/CardWrapper";
 
 export default function BookDetailPage() {
   const paths = ["1"];
+
   return (
     <LayoutContainer title={"Chi tiet"}>
       <MyBreadcrumb paths={paths} />
