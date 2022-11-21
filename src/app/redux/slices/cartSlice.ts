@@ -15,16 +15,12 @@ export type Book = {
 };
 
 export type Cart = {
-  items: Array<Book>;
-  value: number;
-  amount: number;
+  items?: Array<Book>;
+  value?: number;
+  amount?: number;
 };
 
-const initialState: Cart = {
-  items: [],
-  value: 0,
-  amount: 0,
-};
+const initialState: Cart = {};
 
 export const cartSlice = createSlice({
   name: "cart",
@@ -42,9 +38,17 @@ export const cartSlice = createSlice({
       state.value += payload.item.price * payload.number;
       state.amount += payload.number;
     },
+    setCart: (state, { payload }) => {
+      return {
+        ...state,
+        items: payload.cartItemResponses,
+        value: payload.totalPrice + 100000,
+        amount: 10,
+      };
+    },
   },
 });
 
-export const { addToCart } = cartSlice.actions;
+export const { addToCart, setCart } = cartSlice.actions;
 export const cart = (state: AppState) => state.cart;
 export default cartSlice.reducer;

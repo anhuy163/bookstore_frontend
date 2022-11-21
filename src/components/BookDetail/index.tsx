@@ -1,13 +1,24 @@
 import styles from "./styles.module.less";
-import { Image, Typography, Rate, Button, Card, List, InputNumber } from "antd";
+import {
+  Image,
+  Typography,
+  Rate,
+  Button,
+  Card,
+  List,
+  InputNumber,
+  Form,
+} from "antd";
 import { CommentOutlined, CopyOutlined } from "@ant-design/icons";
 import UserAvatar from "../UserAvatar";
-import { AVATAR_SIZE } from "../../constants";
+import { AVATAR_SIZE, HOME_PATH } from "../../constants";
 import React, { useState } from "react";
 import { formatMoney } from "../../app/helpers/moneyhelper";
 import { useAppSelector } from "../../app/hooks/useRedux";
 import { useRouter } from "next/router";
 import { LOGIN_PATH } from "../../constants";
+import PopupPostCommentContainer from "../../containers/PopupPostComment";
+import FormWrapper from "../FormWrapper";
 
 export type Comment = {
   username?: string;
@@ -21,6 +32,8 @@ export default function BookDetail({
   defaultValues = undefined,
   onAdd,
   comments,
+  onPostComment,
+  loading,
 }) {
   const user = useAppSelector((state) => state.user);
   const cart = useAppSelector((state) => state.cart);
@@ -29,6 +42,19 @@ export default function BookDetail({
 
   const router = useRouter();
   const [number, setNumber] = useState<number>(1);
+  const [togglePopupPostCmt, setTogglePopupPostCmt] = useState(false);
+
+  const onOpenPopupPostCmt = () => {
+    if (!!user) {
+      setTogglePopupPostCmt(true);
+      return;
+    }
+    const pathName = router.query;
+    router.push(`${LOGIN_PATH}?bookId=${pathName.id}`);
+  };
+  const onCancelPopupPostCmt = () => {
+    setTogglePopupPostCmt(false);
+  };
 
   const onNumberChange = (value) => {
     setNumber(value);
@@ -36,7 +62,7 @@ export default function BookDetail({
 
   const handleOnAddBook = () => {
     if (!!user) {
-      onAdd(defaultValues, number);
+      onAdd(router.query.id, number);
     } else {
       const pathName = router.query;
       router.push(`${LOGIN_PATH}?bookId=${pathName.id}`);
@@ -73,6 +99,7 @@ export default function BookDetail({
             <div className={styles.buttonArea}>
               <div className={styles.cmtAndSaveBtns}>
                 <Button
+                  onClick={onOpenPopupPostCmt}
                   className={styles.commentButton}
                   icon={<CommentOutlined />}>
                   Đánh giá
@@ -108,49 +135,61 @@ export default function BookDetail({
         <Typography className={styles.bookCommentTitle}>
           Các đánh giá
         </Typography>
-        <div className={styles.commentArea}>
-          <List
-            locale={{ emptyText: "Không có bình luận nào" }}
-            split={false}
-            itemLayout='vertical'
-            size='large'
-            pagination={{
-              onChange: (page) => {
-                console.log(page);
-              },
-              pageSize: 5,
-            }}
-            dataSource={comments as Array<Comment>}
-            renderItem={(item) => (
-              <List.Item key={item.title}>
-                <Card className={styles.commentCard} bordered={false}>
-                  <Card.Meta
-                    avatar={
-                      <UserAvatar size={AVATAR_SIZE.small} src={item.userAva} />
-                    }
-                    title={
-                      <Typography
-                        style={{ fontWeight: "500", fontSize: "20px" }}>
-                        {item.username}
-                      </Typography>
-                    }
-                    description={
-                      <div>
-                        <Rate value={item.star} disabled />
+        <FormWrapper loading={loading}>
+          <div className={styles.commentArea}>
+            <List
+              locale={{ emptyText: "Không có bình luận nào" }}
+              split={false}
+              itemLayout='vertical'
+              size='large'
+              pagination={{
+                onChange: (page) => {
+                  console.log(page);
+                },
+                pageSize: 5,
+              }}
+              dataSource={comments as Array<Comment>}
+              renderItem={(item) => (
+                <List.Item key={item.title}>
+                  <Card className={styles.commentCard} bordered={false}>
+                    <Card.Meta
+                      avatar={
+                        <UserAvatar
+                          size={AVATAR_SIZE.small}
+                          src={item.userAva}
+                        />
+                      }
+                      title={
                         <Typography
-                          style={{ fontWeight: "500", fontSize: "18px" }}>
-                          {item.title}
+                          style={{ fontWeight: "500", fontSize: "20px" }}>
+                          {item.username}
                         </Typography>
-                        <Typography>{item.content}</Typography>
-                      </div>
-                    }
-                  />
-                </Card>
-              </List.Item>
-            )}
-          />
-        </div>
+                      }
+                      description={
+                        <div>
+                          <Rate value={item.star} disabled />
+                          <Typography
+                            style={{ fontWeight: "500", fontSize: "18px" }}>
+                            {item.title}
+                          </Typography>
+                          <Typography>{item.content}</Typography>
+                        </div>
+                      }
+                    />
+                  </Card>
+                </List.Item>
+              )}
+            />
+          </div>
+        </FormWrapper>
       </div>
+
+      <PopupPostCommentContainer
+        visible={togglePopupPostCmt}
+        onCancel={onCancelPopupPostCmt}
+        onFinish={onPostComment}
+        loading={loading}
+      />
     </div>
   );
 }

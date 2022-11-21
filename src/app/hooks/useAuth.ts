@@ -1,13 +1,13 @@
 import { useMutation } from "react-query";
 import axios from "axios";
-import { LOGIN_PATH, HOME_PATH } from "../../constants";
+import { LOGIN_PATH, HOME_PATH, SERVER_LINK } from "../../constants";
 import { useAppDispatch } from "./useRedux";
 import { deleteUser } from "../redux/slices/userSlice";
 
 const useAuth = () => {
   const dispatch = useAppDispatch();
   const mutationFn = (body): any => {
-    return axios.post("http://localhost:8080/authenticate", {
+    return axios.post(`${SERVER_LINK}/authenticate`, {
       email: body.email,
       password: body.password,
     });

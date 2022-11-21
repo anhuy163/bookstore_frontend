@@ -13,6 +13,7 @@ import { RcFile } from "antd/lib/upload";
 export default function UserInfo({
   defaultValues = undefined,
   onChange,
+  loading,
   ...props
 }) {
   const [togglePopupChangepw, setTogglePopupChangepw] = useState(false);
@@ -33,9 +34,9 @@ export default function UserInfo({
     });
   }, []);
   const rules = {
-    name: [{ required: true, message: "Please not leave this field blank" }],
-    phone: [{ required: true, message: "Please not leave this field blank" }],
-    address: [{ required: true, message: "Please not leave this field blank" }],
+    name: [{ required: true, message: "Vui lòng không để trống" }],
+    phone: [{ required: true, message: "Vui lòng không để trống" }],
+    address: [{ required: true, message: "Vui lòng không để trống" }],
   };
   const [base64img, setBase64Img] = useState("");
   const getBase64Img = (img: RcFile, callback: (url: string) => void) => {
@@ -50,18 +51,19 @@ export default function UserInfo({
   return (
     <>
       <div className={styles.infoWrapper}>
-        <div className={styles.avatar}>
-          <UserAvatar
-            size={AVATAR_SIZE.large}
-            src={defaultValues?.avatar}
-            text={defaultValues?.name}
-            base64ImgUrl={base64img}
-          />
-          <div className={styles.uploadAvatarBtn}>
-            <UploadAvatarContainer onChange={onImgChangeHandler} />
+        <FormWrapper className={styles.formWrapper} loading={loading}>
+          <div className={styles.avatar}>
+            <UserAvatar
+              size={AVATAR_SIZE.large}
+              src={defaultValues?.avatar}
+              text={defaultValues?.name}
+              base64ImgUrl={base64img}
+            />
+            <div className={styles.uploadAvatarBtn}>
+              <UploadAvatarContainer onChange={onImgChangeHandler} />
+            </div>
           </div>
-        </div>
-        <FormWrapper className={styles.formWrapper}>
+
           <Form form={form} {...props}>
             <Form.Item label='Tài khoản' colon={false} name='username'>
               <Input bordered={false} readOnly />

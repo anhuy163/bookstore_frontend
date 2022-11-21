@@ -23,7 +23,7 @@ export default function LoginForm({ loading, ...props }) {
     ],
     password: [
       { required: true, message: "Please fill your password" },
-      { min: 8, message: "Your password must have 8 characters at least" },
+      { min: 4, message: "Your password must have 8 characters at least" },
     ],
   };
   return (

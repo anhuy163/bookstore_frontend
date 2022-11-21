@@ -1,13 +1,15 @@
 .uploadBtn {
-  border-radius: 50%;
-  border-radius: 50%;
-  background-color: rgba(105, 190, 201, 1);
-  border: none;
-  color: white;
+  border-radius: 50% !important;
+  width: 32px;
+  background-color: rgba(105, 190, 201, 1) !important;
+  border: none !important;
   &:hover {
-    background-color: rgb(53, 162, 177);
+    background-color: rgba(105, 190, 201, 1);
   }
   :global {
+    .ant-btn-default {
+      border-radius: 50% !important;
+    }
     .anticon {
       color: white;
       //   background-color: rgba(105, 190, 201, 0.69);

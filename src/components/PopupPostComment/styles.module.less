@@ -1,0 +1,63 @@
+.postCommentModal {
+  width: 650px !important;
+  margin-top: 50px;
+  .formWrapper {
+    padding: 20px;
+    :global {
+      .ant-form-item-label {
+        background-color: rgb(243, 241, 241);
+        margin-right: 10px;
+        padding: 0 10px;
+        text-align: center;
+        max-height: 32px;
+        min-width: 200px;
+        & > label {
+          color: rgba(105, 190, 201, 1);
+          font-size: 16px;
+          font-weight: 400;
+        }
+      }
+      .ant-form-item-label
+        > label.ant-form-item-required:not(.ant-form-item-required-mark-optional):before {
+        content: "";
+      }
+      .ant-form-item-label
+        > label.ant-form-item-required:not(.ant-form-item-required-mark-optional):after {
+        display: inline-block;
+        margin-right: 1px;
+        color: #ff4d4f;
+        font-size: 14px;
+        font-family: SimSun, sans-serif;
+        line-height: 1;
+        content: "*";
+      }
+    }
+    .btnArea {
+      max-width: 200px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      .cancelBtn,
+      .postCmtBtn {
+        border: none;
+        color: white;
+      }
+      .postCmtBtn {
+        background-color: rgba(105, 190, 201, 0.6);
+        transition: all 0.5 ease;
+        &:hover {
+          background-color: rgba(105, 190, 201, 1);
+        }
+      }
+      .cancelBtn {
+        color: rgba(105, 190, 201, 1);
+        border: 0.5px solid rgba(105, 190, 201, 0.6);
+        transition: all 0.5s ease;
+        &:hover {
+          border: 1px solid rgba(105, 190, 201, 1);
+        }
+      }
+    }
+  }
+}

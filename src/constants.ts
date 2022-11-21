@@ -1,3 +1,6 @@
+/*SERVER*/
+export const SERVER_LINK = "http://localhost:8080";
+//http://book.koyomiku39.moe:8080
 /*PATH*/
 export const LOGIN_PATH = "/login";
 export const REGISTER_PATH = "/register";

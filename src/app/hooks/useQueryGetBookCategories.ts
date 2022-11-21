@@ -1,8 +1,9 @@
 import { useQuery } from "react-query";
 import axios from "axios";
+import { SERVER_LINK } from "../../constants";
 
 const query = () => {
-  return axios.get("http://localhost:8080/category");
+  return axios.get(`${SERVER_LINK}/category`);
 };
 
 const useQueryGetBookCategories = () => {

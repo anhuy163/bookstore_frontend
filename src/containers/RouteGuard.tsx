@@ -4,13 +4,26 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "../app/hooks/useRedux";
 import { deleteUser, setUser } from "../app/redux/slices/userSlice";
+import { setCart } from "../app/redux/slices/cartSlice";
 import useQueryGetUserProfile from "../app/hooks/useQueryGetUserProfile";
+import useQueryGetCart from "../app/hooks/useQueryGetCart";
 
 export default function RouteGuard({ children }) {
+  const cart = useAppSelector((state) => state.cart);
+  console.log(cart);
+
   const { data: currentUser, loading: isFetchingProfile } =
     useQueryGetUserProfile(
       typeof window !== "undefined" && !!localStorage.getItem("currentUser")
     );
+
+  const { data: userCart, loading: isFetchingCart } = useQueryGetCart(
+    typeof window !== "undefined" && !!localStorage.getItem("currentUser")
+  );
+  typeof window !== "undefined" &&
+    userCart &&
+    localStorage.setItem("cart", JSON.stringify(userCart));
+  console.log(userCart);
 
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -23,8 +36,9 @@ export default function RouteGuard({ children }) {
     if (!!localStorage.getItem("currentUser")) {
       !!currentUser &&
         localStorage.setItem("currentUser", JSON.stringify(currentUser));
-      //   localStorage.setItem("currentUser", currentUser);
-      //   fetchData();
+
+      localStorage.getItem("cart") &&
+        dispatch(setCart(JSON.parse(localStorage.getItem("cart"))));
       dispatch(setUser(JSON.parse(localStorage.getItem("currentUser"))));
     } else {
       dispatch(deleteUser());

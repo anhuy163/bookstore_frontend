@@ -50,11 +50,9 @@ export default function HeaderPC() {
   const profileMenu = () => {
     return (
       <Menu mode='horizontal' theme='light'>
-        <Menu.Item key={"6"}>Change password</Menu.Item>
-        <Menu.Item key={"7"} onClick={handleOnLogout}>
-          Logout
+        <Menu.Item key={"logout"} onClick={handleOnLogout}>
+          Đăng xuất
         </Menu.Item>
-        <Menu.Item key={"8"}>Forgot password</Menu.Item>
       </Menu>
     );
   };

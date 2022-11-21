@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useQuery } from "react-query";
+import { SERVER_LINK } from "../../constants";
 
 const query = (bookId) => {
-  return axios.get(`http://localhost:8080/book/${bookId}`);
+  return axios.get(`${SERVER_LINK}/book/${bookId}`);
 };
 const useQueryGetBookById = (id) => {
   const {
