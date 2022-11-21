@@ -74,7 +74,7 @@ export default function HeaderPC() {
               <Link href={CART_PATH}>
                 <div className={styles.cart}>
                   <Typography className={styles.cartTitle}>Giỏ hàng</Typography>
-                  <Badge count={cart.amount} overflowCount={99}>
+                  <Badge count={cart.quantity} overflowCount={99}>
                     <ShoppingCartOutlined />
                   </Badge>
                 </div>

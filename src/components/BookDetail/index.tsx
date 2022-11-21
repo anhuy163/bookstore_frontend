@@ -19,6 +19,7 @@ import { useRouter } from "next/router";
 import { LOGIN_PATH } from "../../constants";
 import PopupPostCommentContainer from "../../containers/PopupPostComment";
 import FormWrapper from "../FormWrapper";
+import useQueryGetCart from "../../app/hooks/useQueryGetCart";
 
 export type Comment = {
   username?: string;
@@ -34,11 +35,12 @@ export default function BookDetail({
   comments,
   onPostComment,
   loading,
+  cart,
 }) {
   const user = useAppSelector((state) => state.user);
-  const cart = useAppSelector((state) => state.cart);
-  // console.log(cart);
+  // const cart = useAppSelector((state) => state.cart);
   // console.log(comments);
+  // console.log(cart);
 
   const router = useRouter();
   const [number, setNumber] = useState<number>(1);
@@ -62,7 +64,16 @@ export default function BookDetail({
 
   const handleOnAddBook = () => {
     if (!!user) {
-      onAdd(router.query.id, number);
+      onAdd({
+        bookId: parseInt(router.query.id.toString()),
+        bookAva: defaultValues.avatar,
+        bookName: defaultValues.name,
+        discount: 0,
+        priceNow: defaultValues.price,
+        priceOld: 0,
+        quantity: number,
+        status: false,
+      });
     } else {
       const pathName = router.query;
       router.push(`${LOGIN_PATH}?bookId=${pathName.id}`);
@@ -75,6 +86,7 @@ export default function BookDetail({
     content: "Nothing interesting Nothing interesting Nothing interesting",
   }));
   return (
+    // <FormWrapper loading={loading}>
     <div className={styles.detailWrapper}>
       <div className={styles.bookDescription}>
         <div className={styles.bookImageAndInfo}>
@@ -131,57 +143,51 @@ export default function BookDetail({
           </Typography.Text>
         </div>
       </div>
+
       <div className={styles.bookComment}>
         <Typography className={styles.bookCommentTitle}>
           Các đánh giá
         </Typography>
-        <FormWrapper loading={loading}>
-          <div className={styles.commentArea}>
-            <List
-              locale={{ emptyText: "Không có bình luận nào" }}
-              split={false}
-              itemLayout='vertical'
-              size='large'
-              pagination={{
-                onChange: (page) => {
-                  console.log(page);
-                },
-                pageSize: 5,
-              }}
-              dataSource={comments as Array<Comment>}
-              renderItem={(item) => (
-                <List.Item key={item.title}>
-                  <Card className={styles.commentCard} bordered={false}>
-                    <Card.Meta
-                      avatar={
-                        <UserAvatar
-                          size={AVATAR_SIZE.small}
-                          src={item.userAva}
-                        />
-                      }
-                      title={
+
+        <div className={styles.commentArea}>
+          <List
+            locale={{ emptyText: "Không có bình luận nào" }}
+            split={false}
+            // itemLayout='vertical'
+            size='large'
+            pagination={{
+              pageSize: 5,
+            }}
+            dataSource={comments as Array<Comment>}
+            renderItem={(item, index) => (
+              <List.Item key={index}>
+                <Card className={styles.commentCard} bordered={false}>
+                  <Card.Meta
+                    avatar={
+                      <UserAvatar size={AVATAR_SIZE.small} src={item.userAva} />
+                    }
+                    title={
+                      <Typography
+                        style={{ fontWeight: "500", fontSize: "20px" }}>
+                        {item.username}
+                      </Typography>
+                    }
+                    description={
+                      <div>
+                        <Rate value={item.star} disabled />
                         <Typography
-                          style={{ fontWeight: "500", fontSize: "20px" }}>
-                          {item.username}
+                          style={{ fontWeight: "500", fontSize: "18px" }}>
+                          {item.title}
                         </Typography>
-                      }
-                      description={
-                        <div>
-                          <Rate value={item.star} disabled />
-                          <Typography
-                            style={{ fontWeight: "500", fontSize: "18px" }}>
-                            {item.title}
-                          </Typography>
-                          <Typography>{item.content}</Typography>
-                        </div>
-                      }
-                    />
-                  </Card>
-                </List.Item>
-              )}
-            />
-          </div>
-        </FormWrapper>
+                        <Typography>{item.content}</Typography>
+                      </div>
+                    }
+                  />
+                </Card>
+              </List.Item>
+            )}
+          />
+        </div>
       </div>
 
       <PopupPostCommentContainer
@@ -191,5 +197,6 @@ export default function BookDetail({
         loading={loading}
       />
     </div>
+    // </FormWrapper>
   );
 }

@@ -18,9 +18,9 @@ export default function BookDetailContainer({ bookId = undefined }) {
     useQueryGetCommentsByBookId(id);
   const dispatch = useAppDispatch();
   const cart = useAppSelector((state) => state.cart);
-  const onAddBookToCart = (id, number) => {
-    // dispatch(addToCart({ item, number }));
-    addBook({ bookId: id, quantity: number });
+  const onAddBookToCart = (book) => {
+    dispatch(addToCart(book));
+    addBook({ bookId: book.bookId, quantity: book.quantity });
   };
 
   const handleOnPostComment = (value, callback: () => void) => {
@@ -31,11 +31,12 @@ export default function BookDetailContainer({ bookId = undefined }) {
   };
   return (
     <BookDetail
+      cart={cart}
       defaultValues={data}
       onAdd={onAddBookToCart}
       comments={comments}
       onPostComment={handleOnPostComment}
-      loading={postingComment || gettingComments || addingBook}
+      loading={postingComment || gettingComments}
     />
   );
 }

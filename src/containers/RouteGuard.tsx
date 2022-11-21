@@ -10,7 +10,7 @@ import useQueryGetCart from "../app/hooks/useQueryGetCart";
 
 export default function RouteGuard({ children }) {
   const cart = useAppSelector((state) => state.cart);
-  console.log(cart);
+  const user = useAppSelector((state) => state.user);
 
   const { data: currentUser, loading: isFetchingProfile } =
     useQueryGetUserProfile(
@@ -20,10 +20,8 @@ export default function RouteGuard({ children }) {
   const { data: userCart, loading: isFetchingCart } = useQueryGetCart(
     typeof window !== "undefined" && !!localStorage.getItem("currentUser")
   );
-  typeof window !== "undefined" &&
-    userCart &&
-    localStorage.setItem("cart", JSON.stringify(userCart));
   console.log(userCart);
+  console.log(cart);
 
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -36,6 +34,7 @@ export default function RouteGuard({ children }) {
     if (!!localStorage.getItem("currentUser")) {
       !!currentUser &&
         localStorage.setItem("currentUser", JSON.stringify(currentUser));
+      !!userCart && localStorage.setItem("cart", JSON.stringify(userCart));
 
       localStorage.getItem("cart") &&
         dispatch(setCart(JSON.parse(localStorage.getItem("cart"))));
@@ -48,7 +47,7 @@ export default function RouteGuard({ children }) {
     const handleStart = (url) => url !== router.asPath && setDirecting(true);
     router.events.on("routeChangeStart", handleStart);
     return () => clearTimeout(directTingTimeout);
-  }, [router.pathname, router.query, router.asPath]);
+  }, [router.pathname, router.query, router.asPath, currentUser, userCart]);
 
   return <>{directing || isFetchingProfile ? <LoadingScreen /> : children}</>;
 }

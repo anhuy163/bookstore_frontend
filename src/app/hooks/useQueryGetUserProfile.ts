@@ -13,27 +13,25 @@ const query = () => {
 const useQueryGetUserProfile = (enabled) => {
   // const queryClient = useQueryClient();
   // queryClient.invalidateQueries("useQueryGetuserProfile");
-  if (enabled) {
-    const {
-      data: result,
-      isLoading: loading,
-      error,
-    } = useQuery({
-      queryKey: "useQueryGetUserProfile",
-      queryFn: () => query(),
-      // enabled: enabled,
-    });
 
-    const fetchData = () => {
-      localStorage.setItem(
-        "currentUser",
-        JSON.stringify((result as any)?.data?.data)
-      );
-    };
+  const {
+    data: result,
+    isLoading: loading,
+    error,
+  } = useQuery({
+    queryKey: "useQueryGetUserProfile",
+    queryFn: () => query(),
+    enabled: enabled,
+  });
 
-    return { fetchData, data: (result as any)?.data?.data, loading, error };
-  }
-  return { data: [], loading: false };
+  const fetchData = () => {
+    localStorage.setItem(
+      "currentUser",
+      JSON.stringify((result as any)?.data?.data)
+    );
+  };
+
+  return { fetchData, data: (result as any)?.data?.data, loading, error };
 };
 
 export default useQueryGetUserProfile;

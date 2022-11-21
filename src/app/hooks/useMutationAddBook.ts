@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient, QueryClient } from "react-query";
 import axios from "axios";
 import { SERVER_LINK } from "../../constants";
+import { showSuccessMessage } from "../helpers/messageHelper";
 
 const useMutationAddBook = () => {
   // const queryClient = useQueryClient();
@@ -19,7 +20,9 @@ const useMutationAddBook = () => {
 
   const { isLoading: loading, mutateAsync } = useMutation({
     mutationFn: (body) => mutationFn(body),
-    onSuccess: () => queryClient.invalidateQueries(["useQueryGetCart"]),
+    onSuccess: () => {
+      showSuccessMessage("Thêm sách thành công");
+    },
   });
 
   const doMutation = (body) => {

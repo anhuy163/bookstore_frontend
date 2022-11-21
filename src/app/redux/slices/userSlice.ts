@@ -8,6 +8,7 @@ export type User = {
   name?: string;
   avatar?: string;
   phone?: string;
+  role?: string;
 };
 
 // const initialState: User = {
@@ -38,6 +39,7 @@ export const userSlice = createSlice({
         name: payload?.name,
         avatar: payload?.avatar,
         phone: payload?.phone,
+        role: payload?.role,
       };
     },
     deleteUser: (state) => {

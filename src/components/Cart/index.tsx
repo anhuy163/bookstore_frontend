@@ -9,17 +9,19 @@ import {
   Form,
   Input,
 } from "antd";
-import {} from "@ant-design/icons";
 import { formatMoney } from "../../app/helpers/moneyhelper";
 import FormWrapper from "../FormWrapper";
-import { dummyBookData } from "../../constants";
+
 import styles from "./styles.module.less";
 import { AlignType, FixedType } from "rc-table/lib/interface";
 import { useAppSelector } from "../../app/hooks/useRedux";
 import { useState } from "react";
 
-export default function Cart() {
+export default function Cart({ defaultValues, onAddBook, loading }) {
   const cart = useAppSelector((state) => state.cart);
+  // console.log(cart);
+  console.log(defaultValues);
+
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   console.log(selectedRowKeys);
 
@@ -31,7 +33,12 @@ export default function Cart() {
   };
 
   const handleOnBookUpdate = (value) => {
-    console.log(value);
+    // console.log(value);
+    onAddBook({
+      bookId: value.bookId,
+      addedQuantity: value.quantity - value.oldQuantity,
+      updatedQuantity: value.quantity,
+    });
   };
 
   const generateColumns = () => {
@@ -42,13 +49,13 @@ export default function Cart() {
         render: (_, record, index) => {
           return (
             <div className={styles.productImageAndInfor}>
-              <Image className={styles.productImage} src={record.cover} />
+              <Image className={styles.productImage} src={record.bookAva} />
               <div className={styles.productInfor}>
-                <div className={styles.productTitle}>{record.title}</div>
+                <div className={styles.productTitle}>{record.bookName}</div>
                 <div className={styles.productAuthor}>{record.author}</div>
-                <div>
+                {/* <div>
                   <Rate allowHalf defaultValue={record.rate} disabled />
-                </div>
+                </div> */}
               </div>
             </div>
           );
@@ -56,7 +63,7 @@ export default function Cart() {
       },
       {
         title: "Số lượng",
-        dataIndex: "amount",
+        dataIndex: "quantity",
         width: 70,
         align: "center" as AlignType,
         render: (_, record) => {
@@ -64,14 +71,21 @@ export default function Cart() {
             <div>
               <Form
                 className={styles.updateForm}
-                initialValues={{ id: record.id, amount: record.amount }}
+                initialValues={{
+                  bookId: record.bookId,
+                  quantity: record.quantity,
+                  oldQuantity: record.quantity,
+                }}
                 colon={false}
                 onFinish={handleOnBookUpdate}>
-                <Form.Item name={"id"} hidden>
+                <Form.Item name={"bookId"} hidden>
                   <Input />
                 </Form.Item>
-                <Form.Item name={"amount"}>
+                <Form.Item name={"quantity"}>
                   <InputNumber />
+                </Form.Item>
+                <Form.Item name={"oldQuantity"} hidden>
+                  <Input />
                 </Form.Item>
                 <Button htmlType='submit'>Cap nhat</Button>
               </Form>
@@ -87,7 +101,7 @@ export default function Cart() {
         width: 80,
         render: (value, record) => {
           // console.log(record);
-          return <Checkbox defaultChecked={value} />;
+          return <Checkbox defaultChecked={record.status} />;
         },
         filters: [
           {
@@ -148,7 +162,7 @@ export default function Cart() {
           pagination={false}
           scroll={{ x: 1500 }}
           bordered
-          dataSource={dummyBookData}
+          dataSource={defaultValues}
           columns={generateColumns()}
         />
       </FormWrapper>

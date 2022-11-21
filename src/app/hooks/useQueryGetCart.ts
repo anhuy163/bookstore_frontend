@@ -11,22 +11,19 @@ const queryFn = () => {
 };
 
 const useQueryGetCart = (enabled) => {
-  if (enabled) {
-    const {
-      data: result,
-      isLoading: loading,
-      error,
-    } = useQuery({
-      queryKey: "useQueryGetCart",
-      queryFn: () => queryFn(),
-      //   onSuccess: () => console.log("123"),
+  const {
+    data: result,
+    isLoading: loading,
+    error,
+  } = useQuery({
+    queryKey: "useQueryGetCart",
+    queryFn: () => queryFn(),
+    //   onSuccess: () => console.log("123"),
 
-      // enabled: enabled,
-    });
+    enabled: enabled,
+  });
 
-    return { data: (result as any)?.data?.data, loading };
-  }
-  return { data: [], loading: false };
+  return { data: (result as any)?.data?.data, loading };
 };
 
 export default useQueryGetCart;
