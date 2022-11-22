@@ -1,12 +1,13 @@
-import { access_key, secret_key } from "../../utils";
 import S3 from "react-aws-s3-typescript";
 import { createRandomImageKey } from "../helpers/textHelper";
 
 const config = {
   bucketName: "bookstoreimages",
   region: "us-east-1",
-  accessKeyId: access_key,
-  secretAccessKey: secret_key,
+  accessKeyId: process.env.NEXT_PUBLIC_ACCESS_KEY,
+  secretAccessKey: process.env.NEXT_PUBLIC_SECRET_KEY,
+  dirName: "avatar",
+  s3Url: "https://bookstoreimages.s3.amazonaws.com",
 };
 
 const useUploadAvatar = () => {

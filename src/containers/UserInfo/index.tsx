@@ -11,18 +11,19 @@ export default function UserInfoContainer() {
   const onChange = (img) => {
     setImg(img);
   };
-  console.log(img);
+  // console.log(img);
+  // console.log(uploadingAvatar);
 
   const getImageName = async (image) => {
     try {
       setUploadingAvatar(true);
       const res = await uploadAvatar(image);
       console.log(res);
-      return res;
+      setUploadingAvatar(false);
+      return res?.location;
     } catch (error) {
       console.log("error", error);
     }
-    // setUploadingAvatar(false);
   };
 
   const handleOnSubmit = async (value) => {

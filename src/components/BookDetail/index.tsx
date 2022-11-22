@@ -41,6 +41,7 @@ export default function BookDetail({
   // const cart = useAppSelector((state) => state.cart);
   // console.log(comments);
   // console.log(cart);
+  // console.log(process.env.NEXT_PUBLIC_PUBLIC_PASSWORD);
 
   const router = useRouter();
   const [number, setNumber] = useState<number>(1);
@@ -104,6 +105,7 @@ export default function BookDetail({
             <Typography className={styles.bookIntroduction}>
               {defaultValues?.mainDe}
             </Typography>
+
             <Typography className={styles.bookPrice}>
               {formatMoney(defaultValues?.price)}
             </Typography>

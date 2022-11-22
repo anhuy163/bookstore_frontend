@@ -20,8 +20,8 @@ export default function RouteGuard({ children }) {
   const { data: userCart, loading: isFetchingCart } = useQueryGetCart(
     typeof window !== "undefined" && !!localStorage.getItem("currentUser")
   );
-  console.log(userCart);
-  console.log(cart);
+  // console.log(userCart);
+  // console.log(cart);
 
   const dispatch = useAppDispatch();
   const router = useRouter();
