@@ -16,6 +16,8 @@ export default function UserInfo({
   loading,
   ...props
 }) {
+  // console.log(defaultValues);
+
   const [togglePopupChangepw, setTogglePopupChangepw] = useState(false);
   const handleOpenPopupChangepw = () => {
     setTogglePopupChangepw(true);
@@ -25,18 +27,22 @@ export default function UserInfo({
   };
   const [form] = useForm();
   useEffect(() => {
-    form.setFieldsValue({
-      password: defaultValues?.email,
-      username: defaultValues?.email,
-      name: defaultValues?.surname + " " + defaultValues?.name,
-      phone: defaultValues?.phone || null,
-      address: defaultValues?.address || null,
-    });
-  }, []);
+    form.setFieldsValue(
+      defaultValues && {
+        password: defaultValues?.email,
+        username: defaultValues?.email,
+        firstname: defaultValues?.surname,
+        name: defaultValues?.name,
+        phone: defaultValues?.phone || null,
+        // address: defaultValues?.address || null,
+      }
+    );
+  }, [defaultValues]);
   const rules = {
+    firstname: [{ required: true, message: "Vui lòng không để trống" }],
     name: [{ required: true, message: "Vui lòng không để trống" }],
     phone: [{ required: true, message: "Vui lòng không để trống" }],
-    address: [{ required: true, message: "Vui lòng không để trống" }],
+    // address: [{ required: true, message: "Vui lòng không để trống" }],
   };
   const [base64img, setBase64Img] = useState("");
   const getBase64Img = (img: RcFile, callback: (url: string) => void) => {
@@ -81,10 +87,13 @@ export default function UserInfo({
               </Tooltip>
             </div>
             <Form.Item
-              label='Họ và tên'
+              label='Họ'
               colon={false}
               rules={rules.name}
-              name='name'>
+              name='firstname'>
+              <Input />
+            </Form.Item>
+            <Form.Item label='Tên' colon={false} rules={rules.name} name='name'>
               <Input />
             </Form.Item>
             <Form.Item
@@ -94,13 +103,13 @@ export default function UserInfo({
               name='phone'>
               <Input />
             </Form.Item>
-            <Form.Item
+            {/* <Form.Item
               label='Địa chỉ'
               colon={false}
               rules={rules.address}
               name='address'>
               <Input />
-            </Form.Item>
+            </Form.Item> */}
             <div className={styles.buttonArea}>
               <Button htmlType='submit'>Xác nhận</Button>
             </div>

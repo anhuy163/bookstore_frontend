@@ -4,6 +4,11 @@ import { LOGIN_PATH, HOME_PATH, SERVER_LINK } from "../../constants";
 import { useAppDispatch } from "./useRedux";
 import { deleteUser } from "../redux/slices/userSlice";
 
+export type LoginResponse = {
+  code?: number;
+  data?: {};
+};
+
 const useAuth = () => {
   const dispatch = useAppDispatch();
   const mutationFn = (body): any => {
@@ -22,7 +27,7 @@ const useAuth = () => {
     return new Promise(async (resolve, reject) => {
       try {
         const result = await mutateAsync(body as never);
-        resolve((result as any)?.data);
+        resolve(result as LoginResponse);
       } catch (error) {
         console.log(error);
         reject(error);
@@ -34,6 +39,7 @@ const useAuth = () => {
     try {
       localStorage.removeItem("token");
       localStorage.removeItem("currentUser");
+      // localStorage.removeItem("cart");
       window.location.replace(HOME_PATH);
     } catch (error) {
       console.log(error);

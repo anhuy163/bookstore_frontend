@@ -11,8 +11,8 @@ import Link from "next/link";
 import { useForm } from "antd/lib/form/Form";
 import { LOGIN_PATH } from "../../constants";
 
-export default function RegisterForm() {
-  const [form] = useForm();
+export default function RegisterForm({ loading, ...props }) {
+  const [form] = Form.useForm();
 
   const rules = {
     username: [
@@ -23,15 +23,7 @@ export default function RegisterForm() {
       { required: true, message: "Vui lòng điền mật khẩu" },
       { min: 8, message: "Mật khẩu ít nhất phải có 8 ký tự" },
     ],
-    confirmPassword: [
-      { required: true, message: "Vui lòng không bỏ trống" },
-      {
-        validator: (rule, value, cb) => {
-          if (value !== form.getFieldValue("password")) cb("error");
-        },
-        message: "Không đúng với mật khẩu bạn đã nhập ở trên",
-      },
-    ],
+    confirmPassword: [{ required: true, message: "Vui lòng không bỏ trống" }],
     firstName: [
       {
         required: true,
@@ -48,9 +40,9 @@ export default function RegisterForm() {
     ],
   };
   return (
-    <FormWrapper className={styles.formWrapper}>
-      <Typography className={styles.formTitle}>Yuu Book</Typography>
-      <Form form={form} className={styles.container}>
+    <FormWrapper className={styles.formWrapper} loading={loading}>
+      <Typography className={styles.formTitle}>UET BOOKS</Typography>
+      <Form {...props} form={form} className={styles.container}>
         <Form.Item
           label='Tài khoản'
           colon={false}
@@ -93,21 +85,23 @@ export default function RegisterForm() {
           </Form.Item>
         </div>
         <Space className={styles.registerBtn}>
-          <Button className={styles.button} htmlType='submit' type='primary'>
-            Register
-          </Button>
+          <Form.Item>
+            <Button className={styles.button} htmlType='submit' type='primary'>
+              Đăng ký
+            </Button>
+          </Form.Item>
         </Space>
-        <Typography className={styles.btnSplitText}>or</Typography>
+        {/* <Typography className={styles.btnSplitText}>or</Typography>
         <Space className={styles.loginWithGoogleBtn}>
           <Button htmlType='submit' type='primary'>
             <GooglePlusOutlined style={{ fontSize: "30" }} />
             Login with Google
           </Button>
-        </Space>
+        </Space> */}
         <div className={styles.loginLink}>
-          Have an account yet?{" "}
+          Bạn đã có tài khoản ?{" "}
           <Link href={LOGIN_PATH}>
-            <a>Sign in</a>
+            <a>Đăng nhập</a>
           </Link>
         </div>
       </Form>

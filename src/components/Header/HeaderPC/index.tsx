@@ -27,13 +27,21 @@ import useAuth from "../../../app/hooks/useAuth";
 import Link from "next/link";
 import { deleteUser } from "../../../app/redux/slices/userSlice";
 import { useRouter } from "next/router";
+import useQueryGetUserProfile from "../../../app/hooks/useQueryGetUserProfile";
+import useQueryGetCart from "../../../app/hooks/useQueryGetCart";
+import FormWrapper from "../../FormWrapper";
 
 export default function HeaderPC() {
+  const { data: user, loading: gettingProfile } = useQueryGetUserProfile();
+  const { data: cart, loading: gettingCart } = useQueryGetCart();
+  const currentUser = localStorage.getItem("currentUser");
+  // console.log(user);
+
   const router = useRouter();
-  const user = useAppSelector((state) => state.user);
+  // const user = useAppSelector((state) => state.user);
   // console.log(user);
   const { logout } = useAuth();
-  const cart = useAppSelector((state) => state.cart);
+  // const cart = useAppSelector((state) => state.cart);
 
   // const dispatch = useAppDispatch();
   const handleRedirectToLogin = () => {
@@ -69,32 +77,36 @@ export default function HeaderPC() {
           />
         </Col>
         <Col flex={6}>
-          {!!user ? (
-            <div className={styles.profileArea}>
-              <Link href={CART_PATH}>
-                <div className={styles.cart}>
-                  <Typography className={styles.cartTitle}>Giỏ hàng</Typography>
-                  <Badge count={cart.quantity} overflowCount={99}>
-                    <ShoppingCartOutlined />
-                  </Badge>
-                </div>
-              </Link>
-              <div className={styles.avatar}>
-                <UserAvatar
-                  size={AVATAR_SIZE.small}
-                  text={user?.name}
-                  link={PROFILE_PATH}
-                  src={user?.avatar}
-                />
-              </div>
-              <div className={styles.userNameArea}>
-                <Dropdown overlay={profileMenu} trigger={["click"]}>
-                  <div className={styles.userName}>
-                    {user?.surname} {user?.name}
+          {!!currentUser ? (
+            <FormWrapper loading={gettingCart || gettingProfile}>
+              <div className={styles.profileArea}>
+                <Link href={CART_PATH}>
+                  <div className={styles.cart}>
+                    <Typography className={styles.cartTitle}>
+                      Giỏ hàng
+                    </Typography>
+                    <Badge count={cart ? cart.total : 0} overflowCount={99}>
+                      <ShoppingCartOutlined />
+                    </Badge>
                   </div>
-                </Dropdown>
+                </Link>
+                <div className={styles.avatar}>
+                  <UserAvatar
+                    size={AVATAR_SIZE.small}
+                    text={user?.name}
+                    link={PROFILE_PATH}
+                    src={user?.avatar}
+                  />
+                </div>
+                <div className={styles.userNameArea}>
+                  <Dropdown overlay={profileMenu} trigger={["click"]}>
+                    <div className={styles.userName}>
+                      {user?.surname} {user?.name}
+                    </div>
+                  </Dropdown>
+                </div>
               </div>
-            </div>
+            </FormWrapper>
           ) : (
             <div className={styles.loginBtnArea}>
               <Button

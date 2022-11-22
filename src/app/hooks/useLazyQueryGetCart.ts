@@ -1,5 +1,5 @@
-import { useQuery } from "react-query";
 import axios from "axios";
+import { useQuery, useQueryClient } from "react-query";
 import { SERVER_LINK } from "../../constants";
 
 const queryFn = () => {
@@ -10,17 +10,20 @@ const queryFn = () => {
   });
 };
 
-const useQueryGetCart = () => {
+const useLazyQueryGetCart = (enabled) => {
   const {
     data: result,
     isLoading: loading,
     error,
   } = useQuery({
-    queryKey: "useQueryGetCart",
+    queryKey: "useLazyQueryGetCart",
     queryFn: () => queryFn(),
+    //   onSuccess: () => console.log("123"),
+
+    enabled: enabled,
   });
 
-  return { data: (result as any)?.data?.data, loading, error };
+  return { data: (result as any)?.data?.data, loading };
 };
 
-export default useQueryGetCart;
+export default useLazyQueryGetCart;

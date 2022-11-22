@@ -5,21 +5,21 @@ import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "../app/hooks/useRedux";
 import { deleteUser, setUser } from "../app/redux/slices/userSlice";
 import { setCart } from "../app/redux/slices/cartSlice";
-import useQueryGetUserProfile from "../app/hooks/useQueryGetUserProfile";
-import useQueryGetCart from "../app/hooks/useQueryGetCart";
+import useLazyQueryGetUserProfile from "../app/hooks/useLazyQueryGetUserProfile";
+import useLazyQueryGetCart from "../app/hooks/useLazyQueryGetCart";
 
 export default function RouteGuard({ children }) {
-  const cart = useAppSelector((state) => state.cart);
-  const user = useAppSelector((state) => state.user);
+  // const cart = useAppSelector((state) => state.cart);
+  // const user = useAppSelector((state) => state.user);
 
-  const { data: currentUser, loading: isFetchingProfile } =
-    useQueryGetUserProfile(
-      typeof window !== "undefined" && !!localStorage.getItem("currentUser")
-    );
+  // const { data: currentUser, loading: isFetchingProfile } =
+  //   useLazyQueryGetUserProfile(
+  //     typeof window !== "undefined" && !!localStorage.getItem("currentUser")
+  //   );
 
-  const { data: userCart, loading: isFetchingCart } = useQueryGetCart(
-    typeof window !== "undefined" && !!localStorage.getItem("currentUser")
-  );
+  // const { data: userCart, loading: isFetchingCart } = useLazyQueryGetCart(
+  //   typeof window !== "undefined" && !!localStorage.getItem("currentUser")
+  // );
   // console.log(userCart);
   // console.log(cart);
 
@@ -31,25 +31,25 @@ export default function RouteGuard({ children }) {
   };
 
   useEffect(() => {
-    if (!!localStorage.getItem("currentUser")) {
-      !!currentUser &&
-        localStorage.setItem("currentUser", JSON.stringify(currentUser));
-      !!userCart && localStorage.setItem("cart", JSON.stringify(userCart));
+    // if (!!localStorage.getItem("currentUser")) {
+    //   !!currentUser &&
+    //     localStorage.setItem("currentUser", JSON.stringify(currentUser));
+    //   !!userCart && localStorage.setItem("cart", JSON.stringify(userCart));
 
-      localStorage.getItem("cart") &&
-        dispatch(setCart(JSON.parse(localStorage.getItem("cart"))));
-      dispatch(setUser(JSON.parse(localStorage.getItem("currentUser"))));
-    } else {
-      dispatch(deleteUser());
-    }
+    //   localStorage.getItem("cart") &&
+    //     dispatch(setCart(JSON.parse(localStorage.getItem("cart"))));
+    //   dispatch(setUser(JSON.parse(localStorage.getItem("currentUser"))));
+    // } else {
+    //   dispatch(deleteUser());
+    // }
     const directTingTimeout = setTimeout(onDirecting, 500);
     () => directTingTimeout;
     const handleStart = (url) => url !== router.asPath && setDirecting(true);
     router.events.on("routeChangeStart", handleStart);
     return () => clearTimeout(directTingTimeout);
-  }, [router.pathname, router.query, router.asPath, currentUser, userCart]);
+  }, [router.pathname, router.query, router.asPath]);
 
-  return <>{directing || isFetchingProfile ? <LoadingScreen /> : children}</>;
+  return <>{directing ? <LoadingScreen /> : children}</>;
 }
 
 // import { Auth, Hub } from 'aws-amplify';

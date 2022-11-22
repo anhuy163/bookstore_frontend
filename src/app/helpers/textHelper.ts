@@ -24,3 +24,13 @@ export const createRandomImageKey = (length) => {
   }
   return `i_${result}`;
 };
+
+export const convertNumberArray = (array) => {
+  const length = array.length;
+  var result = "";
+  for (let i = 0; i < length - 1; i++) {
+    result = array[i] + ",";
+  }
+  result += array[length - 1];
+  return result;
+};

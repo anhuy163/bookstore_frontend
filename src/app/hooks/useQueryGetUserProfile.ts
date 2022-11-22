@@ -10,10 +10,7 @@ const query = () => {
   });
 };
 
-const useQueryGetUserProfile = (enabled) => {
-  // const queryClient = useQueryClient();
-  // queryClient.invalidateQueries("useQueryGetuserProfile");
-
+const useQueryGetUserProfile = () => {
   const {
     data: result,
     isLoading: loading,
@@ -21,17 +18,9 @@ const useQueryGetUserProfile = (enabled) => {
   } = useQuery({
     queryKey: "useQueryGetUserProfile",
     queryFn: () => query(),
-    enabled: enabled,
   });
 
-  const fetchData = () => {
-    localStorage.setItem(
-      "currentUser",
-      JSON.stringify((result as any)?.data?.data)
-    );
-  };
-
-  return { fetchData, data: (result as any)?.data?.data, loading, error };
+  return { data: (result as any)?.data?.data, loading, error };
 };
 
 export default useQueryGetUserProfile;

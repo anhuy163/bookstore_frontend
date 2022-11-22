@@ -8,6 +8,7 @@ import {
   InputNumber,
   Form,
   Input,
+  Select,
 } from "antd";
 import { formatMoney } from "../../app/helpers/moneyhelper";
 import FormWrapper from "../FormWrapper";
@@ -17,13 +18,20 @@ import { AlignType, FixedType } from "rc-table/lib/interface";
 import { useAppSelector } from "../../app/hooks/useRedux";
 import { useState } from "react";
 
-export default function Cart({ defaultValues, onAddBook, loading }) {
+export default function Cart({
+  defaultValues,
+  onAddBook,
+  onChangeStatus,
+  loading,
+  totalPrice,
+  onDeleteBooks,
+}) {
   const cart = useAppSelector((state) => state.cart);
   // console.log(cart);
-  console.log(defaultValues);
+  // console.log(defaultValues);
 
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  console.log(selectedRowKeys);
+  // console.log(selectedRowKeys);
 
   const rowSelection = {
     selectedRowKeys,
@@ -32,13 +40,24 @@ export default function Cart({ defaultValues, onAddBook, loading }) {
     },
   };
 
-  const handleOnBookUpdate = (value) => {
-    // console.log(value);
+  const handleOnBookUpdate = (value, bookId, oldQuantity) => {
+    console.log(value, oldQuantity);
+
     onAddBook({
-      bookId: value.bookId,
-      addedQuantity: value.quantity - value.oldQuantity,
-      updatedQuantity: value.quantity,
+      bookId,
+      addedQuantity: value - oldQuantity,
+      updatedQuantity: value,
     });
+  };
+
+  const handleOnDeleteBooks = () => {
+    onDeleteBooks(selectedRowKeys);
+  };
+
+  const handleOnStatusChange = (status, id) => {
+    // console.log(status);
+
+    onChangeStatus({ bookId: id, status });
   };
 
   const generateColumns = () => {
@@ -53,9 +72,6 @@ export default function Cart({ defaultValues, onAddBook, loading }) {
               <div className={styles.productInfor}>
                 <div className={styles.productTitle}>{record.bookName}</div>
                 <div className={styles.productAuthor}>{record.author}</div>
-                {/* <div>
-                  <Rate allowHalf defaultValue={record.rate} disabled />
-                </div> */}
               </div>
             </div>
           );
@@ -69,30 +85,19 @@ export default function Cart({ defaultValues, onAddBook, loading }) {
         render: (_, record) => {
           return (
             <div>
-              <Form
-                className={styles.updateForm}
-                initialValues={{
-                  bookId: record.bookId,
-                  quantity: record.quantity,
-                  oldQuantity: record.quantity,
-                }}
-                colon={false}
-                onFinish={handleOnBookUpdate}>
-                <Form.Item name={"bookId"} hidden>
-                  <Input />
-                </Form.Item>
-                <Form.Item name={"quantity"}>
-                  <InputNumber />
-                </Form.Item>
-                <Form.Item name={"oldQuantity"} hidden>
-                  <Input />
-                </Form.Item>
-                <Button htmlType='submit'>Cap nhat</Button>
-              </Form>
+              <Select
+                value={_}
+                onChange={(value) =>
+                  handleOnBookUpdate(value, record.bookId, record.quantity)
+                }
+                options={Array.from(Array(100).keys()).map((value) => {
+                  return { value: value + 1, label: value + 1 };
+                })}
+              />
             </div>
           );
         },
-        sorter: (a, b) => a.amount - b.amount,
+        sorter: (a, b) => a.quantity - b.quantity,
       },
       {
         title: "Trạng thái",
@@ -100,8 +105,13 @@ export default function Cart({ defaultValues, onAddBook, loading }) {
         align: "center" as AlignType,
         width: 80,
         render: (value, record) => {
-          // console.log(record);
-          return <Checkbox defaultChecked={record.status} />;
+          // console.log(value);
+          return (
+            <Checkbox
+              onChange={() => handleOnStatusChange(!value, record.bookId)}
+              checked={value}
+            />
+          );
         },
         filters: [
           {
@@ -121,7 +131,7 @@ export default function Cart({ defaultValues, onAddBook, loading }) {
         align: "center" as AlignType,
         render: (_, record) => (
           <Typography className={styles.productValue}>
-            {formatMoney(record.value)}
+            {formatMoney(record.quantity * record.priceNow)}
           </Typography>
         ),
       },
@@ -145,14 +155,15 @@ export default function Cart({ defaultValues, onAddBook, loading }) {
     <div className={styles.cartTable}>
       <Typography className={styles.cartTitle}>Giỏ hàng của bạn</Typography>
       <Button
+        onClick={handleOnDeleteBooks}
         type='primary'
         disabled={selectedRowKeys.length ? false : true}
         className={styles.deleteBtn}>
         Xóa
       </Button>
-      <FormWrapper>
+      <FormWrapper loading={loading}>
         <Table
-          rowKey={"id"}
+          rowKey={"bookId"}
           rowSelection={rowSelection}
           locale={{
             triggerDesc: "Nhấn để sắp xếp giảm dần",
@@ -169,7 +180,7 @@ export default function Cart({ defaultValues, onAddBook, loading }) {
       <Typography className={styles.cartValueTitle}>
         Tổng:{" "}
         <Typography className={styles.cartValue}>
-          {formatMoney(cart.value)}
+          {totalPrice ? formatMoney(totalPrice) : ""}
         </Typography>
       </Typography>
     </div>

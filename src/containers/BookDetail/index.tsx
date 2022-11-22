@@ -19,7 +19,9 @@ export default function BookDetailContainer({ bookId = undefined }) {
   const dispatch = useAppDispatch();
   const cart = useAppSelector((state) => state.cart);
   const onAddBookToCart = (book) => {
-    dispatch(addToCart(book));
+    console.log(book);
+
+    // dispatch(addToCart(book));
     addBook({ bookId: book.bookId, quantity: book.quantity });
   };
 

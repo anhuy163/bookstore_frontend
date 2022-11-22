@@ -19,7 +19,7 @@ import { useRouter } from "next/router";
 import { LOGIN_PATH } from "../../constants";
 import PopupPostCommentContainer from "../../containers/PopupPostComment";
 import FormWrapper from "../FormWrapper";
-import useQueryGetCart from "../../app/hooks/useQueryGetCart";
+import useQueryGetCart from "../../app/hooks/useLazyQueryGetCart";
 
 export type Comment = {
   username?: string;
