@@ -1,5 +1,5 @@
 /*SERVER*/
-export const SERVER_LINK = "http://book.koyomiku39.moe:8080";
+export const SERVER_LINK = "https://book.koyomiku39.moe:8080";
 //http://book.koyomiku39.moe:8080
 /*PATH*/
 export const LOGIN_PATH = "/login";
