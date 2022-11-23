@@ -2,7 +2,9 @@ import { useMutation, useQueryClient } from "react-query";
 import { showSuccessMessage } from "../helpers/messageHelper";
 import { SERVER_LINK } from "../../constants";
 import axios from "axios";
-
+import { useAppDispatch } from "./useRedux";
+import { setUser } from "../redux/slices/userSlice";
+import useLazyQueryGetProfile from "./useLazyQueryGetUserProfile";
 const mutationFn = (body) => {
   return axios.post(`${SERVER_LINK}/user`, body, {
     headers: {
@@ -12,6 +14,8 @@ const mutationFn = (body) => {
 };
 
 const useMutationUpdateUserProfile = () => {
+  const dispatch = useAppDispatch();
+  const { fetchData: fetchUser } = useLazyQueryGetProfile();
   const queryClient = useQueryClient();
   const {
     isLoading: loading,
@@ -22,6 +26,9 @@ const useMutationUpdateUserProfile = () => {
     onSuccess: () => {
       queryClient.invalidateQueries("useQueryGetUserProfile");
       showSuccessMessage("Cập nhật hồ sơ thành công");
+      fetchUser(true).then(() =>
+        dispatch(setUser(JSON.parse(localStorage.getItem("currentUser"))))
+      );
     },
   });
 

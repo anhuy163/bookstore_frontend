@@ -41,7 +41,7 @@ export const cartSlice = createSlice({
         ...state,
         items: payload.cartItemResponses,
         value: payload.totalPrice,
-        quantity: 10,
+        quantity: payload.total,
       };
     },
     updateItem: (state, { payload }) => {

@@ -39,7 +39,7 @@ const useAuth = () => {
     try {
       localStorage.removeItem("token");
       localStorage.removeItem("currentUser");
-      // localStorage.removeItem("cart");
+      localStorage.removeItem("cart");
       window.location.replace(HOME_PATH);
     } catch (error) {
       console.log(error);

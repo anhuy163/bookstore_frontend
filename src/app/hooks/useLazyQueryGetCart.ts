@@ -1,3 +1,4 @@
+import { useState } from "react";
 import axios from "axios";
 import { useQuery, useQueryClient } from "react-query";
 import { SERVER_LINK } from "../../constants";
@@ -10,20 +11,22 @@ const queryFn = () => {
   });
 };
 
-const useLazyQueryGetCart = (enabled) => {
-  const {
-    data: result,
-    isLoading: loading,
-    error,
-  } = useQuery({
-    queryKey: "useLazyQueryGetCart",
-    queryFn: () => queryFn(),
-    //   onSuccess: () => console.log("123"),
-
-    enabled: enabled,
-  });
-
-  return { data: (result as any)?.data?.data, loading };
+const useLazyQueryGetCart = () => {
+  const [loading, setLoading] = useState(false);
+  const fetchData = async (enable) => {
+    if (!enable) {
+      return;
+    }
+    try {
+      setLoading(true);
+      const res = await queryFn();
+      localStorage.setItem("cart", JSON.stringify((res as any)?.data?.data));
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  return { fetchData, loading };
 };
 
 export default useLazyQueryGetCart;

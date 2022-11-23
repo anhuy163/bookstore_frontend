@@ -11,15 +11,11 @@ import useLazyQueryGetCart from "../app/hooks/useLazyQueryGetCart";
 export default function RouteGuard({ children }) {
   // const cart = useAppSelector((state) => state.cart);
   // const user = useAppSelector((state) => state.user);
+  const { fetchData: fetchUserProfile, loading: isFetchingProfile } =
+    useLazyQueryGetUserProfile();
+  const { fetchData: fetchCart, loading: isFetchingCart } =
+    useLazyQueryGetCart();
 
-  // const { data: currentUser, loading: isFetchingProfile } =
-  //   useLazyQueryGetUserProfile(
-  //     typeof window !== "undefined" && !!localStorage.getItem("currentUser")
-  //   );
-
-  // const { data: userCart, loading: isFetchingCart } = useLazyQueryGetCart(
-  //   typeof window !== "undefined" && !!localStorage.getItem("currentUser")
-  // );
   // console.log(userCart);
   // console.log(cart);
 
@@ -31,17 +27,17 @@ export default function RouteGuard({ children }) {
   };
 
   useEffect(() => {
-    // if (!!localStorage.getItem("currentUser")) {
-    //   !!currentUser &&
-    //     localStorage.setItem("currentUser", JSON.stringify(currentUser));
-    //   !!userCart && localStorage.setItem("cart", JSON.stringify(userCart));
+    if (!!localStorage.getItem("currentUser")) {
+      fetchUserProfile(true).then(() =>
+        dispatch(setUser(JSON.parse(localStorage.getItem("currentUser"))))
+      );
+      fetchCart(true).then(() =>
+        dispatch(setCart(JSON.parse(localStorage.getItem("cart"))))
+      );
+    } else {
+      dispatch(deleteUser());
+    }
 
-    //   localStorage.getItem("cart") &&
-    //     dispatch(setCart(JSON.parse(localStorage.getItem("cart"))));
-    //   dispatch(setUser(JSON.parse(localStorage.getItem("currentUser"))));
-    // } else {
-    //   dispatch(deleteUser());
-    // }
     const directTingTimeout = setTimeout(onDirecting, 500);
     () => directTingTimeout;
     const handleStart = (url) => url !== router.asPath && setDirecting(true);
@@ -49,7 +45,15 @@ export default function RouteGuard({ children }) {
     return () => clearTimeout(directTingTimeout);
   }, [router.pathname, router.query, router.asPath]);
 
-  return <>{directing ? <LoadingScreen /> : children}</>;
+  return (
+    <>
+      {directing || isFetchingCart || isFetchingProfile ? (
+        <LoadingScreen />
+      ) : (
+        children
+      )}
+    </>
+  );
 }
 
 // import { Auth, Hub } from 'aws-amplify';

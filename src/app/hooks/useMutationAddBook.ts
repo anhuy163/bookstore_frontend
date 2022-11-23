@@ -2,8 +2,13 @@ import { useMutation, useQueryClient, QueryClient } from "react-query";
 import axios from "axios";
 import { SERVER_LINK } from "../../constants";
 import { showSuccessMessage } from "../helpers/messageHelper";
+import useLazyQueryGetCart from "./useLazyQueryGetCart";
+import { setCart } from "../redux/slices/cartSlice";
+import { useAppDispatch } from "./useRedux";
 
 const useMutationAddBook = () => {
+  const dispatch = useAppDispatch();
+  const { fetchData: fetchCart } = useLazyQueryGetCart();
   const queryClient = useQueryClient();
   const mutationFn = (body): any => {
     return axios.post(
@@ -19,9 +24,12 @@ const useMutationAddBook = () => {
 
   const { isLoading: loading, mutateAsync } = useMutation({
     mutationFn: (body) => mutationFn(body),
-    onSuccess: () => {
+    onSuccess: async () => {
       queryClient.invalidateQueries("useQueryGetCart");
       showSuccessMessage("Cập nhật giỏ hàng thành công");
+      fetchCart(true).then(() => {
+        dispatch(setCart(JSON.parse(localStorage.getItem("cart"))));
+      });
     },
   });
 

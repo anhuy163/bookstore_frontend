@@ -2,8 +2,13 @@ import { useMutation, useQueryClient } from "react-query";
 import axios from "axios";
 import { SERVER_LINK } from "../../constants";
 import { showSuccessMessage } from "../helpers/messageHelper";
+import useLazyQueryGetCart from "./useLazyQueryGetCart";
+import { setCart } from "../redux/slices/cartSlice";
+import { useAppDispatch } from "./useRedux";
 
 const useMutationChangeBookStatus = () => {
+  const dispatch = useAppDispatch();
+  const { fetchData: fetchCart } = useLazyQueryGetCart();
   const mutationFn = (body): any => {
     return axios.put(
       `${SERVER_LINK}/cart`,
@@ -25,6 +30,9 @@ const useMutationChangeBookStatus = () => {
     onSuccess: () => {
       queryClient.invalidateQueries("useQueryGetCart");
       showSuccessMessage("Cập nhật giỏ hàng thành công");
+      fetchCart(true).then(() => {
+        dispatch(setCart(JSON.parse(localStorage.getItem("cart"))));
+      });
     },
   });
 

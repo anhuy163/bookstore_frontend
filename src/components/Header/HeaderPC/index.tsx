@@ -30,20 +30,19 @@ import { useRouter } from "next/router";
 import useQueryGetUserProfile from "../../../app/hooks/useQueryGetUserProfile";
 import useQueryGetCart from "../../../app/hooks/useQueryGetCart";
 import FormWrapper from "../../FormWrapper";
+import useLazyQueryGetCart from "../../../app/hooks/useLazyQueryGetCart";
+import useLazyQueryGetUserProfile from "../../../app/hooks/useLazyQueryGetUserProfile";
+import { useEffect, useState } from "react";
 
 export default function HeaderPC() {
-  const { data: user, loading: gettingProfile } = useQueryGetUserProfile();
-  const { data: cart, loading: gettingCart } = useQueryGetCart();
+  const cart = useAppSelector((state) => state.cart);
+  const user = useAppSelector((state) => state.user);
   const currentUser = localStorage.getItem("currentUser");
-  // console.log(user);
-
   const router = useRouter();
-  // const user = useAppSelector((state) => state.user);
-  // console.log(user);
-  const { logout } = useAuth();
-  // const cart = useAppSelector((state) => state.cart);
+  console.log(cart);
 
-  // const dispatch = useAppDispatch();
+  const { logout } = useAuth();
+
   const handleRedirectToLogin = () => {
     window.location.replace(LOGIN_PATH);
   };
@@ -78,14 +77,14 @@ export default function HeaderPC() {
         </Col>
         <Col flex={6}>
           {!!currentUser ? (
-            <FormWrapper loading={gettingCart || gettingProfile}>
+            <FormWrapper>
               <div className={styles.profileArea}>
                 <Link href={CART_PATH}>
                   <div className={styles.cart}>
                     <Typography className={styles.cartTitle}>
                       Giỏ hàng
                     </Typography>
-                    <Badge count={cart ? cart.total : 0} overflowCount={99}>
+                    <Badge count={cart ? cart.quantity : 0} overflowCount={99}>
                       <ShoppingCartOutlined />
                     </Badge>
                   </div>

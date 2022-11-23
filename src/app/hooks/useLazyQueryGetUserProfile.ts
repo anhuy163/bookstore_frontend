@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useQuery, useQueryClient } from "react-query";
 import { SERVER_LINK } from "../../constants";
+import { useState } from "react";
 
-const query = () => {
+const queryFn = () => {
   return axios.get(`${SERVER_LINK}/user`, {
     headers: {
       Authorization: JSON.parse(localStorage.getItem("token")),
@@ -10,28 +11,25 @@ const query = () => {
   });
 };
 
-const useLazyQueryGetUserProfile = (enabled) => {
-  // const queryClient = useQueryClient();
-  // queryClient.invalidateQueries("useQueryGetuserProfile");
-
-  const {
-    data: result,
-    isLoading: loading,
-    error,
-  } = useQuery({
-    queryKey: "useLazyQueryGetUserProfile",
-    queryFn: () => query(),
-    enabled: enabled,
-  });
-
-  const fetchData = () => {
-    localStorage.setItem(
-      "currentUser",
-      JSON.stringify((result as any)?.data?.data)
-    );
+const useLazyQueryGetProfile = () => {
+  const [loading, setLoading] = useState(false);
+  const fetchData = async (enable) => {
+    if (!enable) {
+      return;
+    }
+    try {
+      setLoading(true);
+      const res = await queryFn();
+      localStorage.setItem(
+        "currentUser",
+        JSON.stringify((res as any)?.data?.data)
+      );
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
   };
-
-  return { fetchData, data: (result as any)?.data?.data, loading, error };
+  return { fetchData, loading };
 };
 
-export default useLazyQueryGetUserProfile;
+export default useLazyQueryGetProfile;
