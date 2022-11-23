@@ -17,19 +17,25 @@ export default function LoginForm({ loading, ...props }) {
   const [form] = useForm();
   const rules = {
     email: [
-      { required: true, message: "Please fill your username" },
+      { required: true, message: "Vui lòng không bỏ trống" },
       { whitespace: true },
     ],
     password: [
-      { required: true, message: "Please fill your password" },
-      { min: 4, message: "Your password must have 8 characters at least" },
+      { required: true, message: "Vui lòng không bỏ trống" },
+      { min: 8, message: "Độ dài mật khẩu ít nhất 8 ký tự" },
     ],
   };
   return (
     <FormWrapper loading={loading} className={styles.formWrapper}>
       <Typography className={styles.formTitle}>UET BOOKS</Typography>
       <Form form={form} className={styles.container} {...props}>
-        <Form.Item colon={false} name='email' rules={rules.email}>
+        <Form.Item
+          colon={false}
+          name='email'
+          rules={[
+            { type: "email", message: "Email không hợp lệ" },
+            { required: true, message: "Vui lòng điền tài khoản" },
+          ]}>
           <Input addonBefore={<UserOutlined />} allowClear />
         </Form.Item>
         <Form.Item colon={false} name='password' rules={rules.password}>

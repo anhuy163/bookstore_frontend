@@ -2,7 +2,7 @@ import { Button, Form, Input, Typography, Tooltip } from "antd";
 import styles from "./styles.module.less";
 import UserAvatar from "../UserAvatar";
 import FormWrapper from "../FormWrapper";
-import { AVATAR_SIZE } from "../../constants";
+import { AVATAR_SIZE, HIDEN_PASSWORD } from "../../constants";
 import { EditOutlined } from "@ant-design/icons";
 import { useForm } from "antd/lib/form/Form";
 import { useEffect, useState } from "react";
@@ -29,7 +29,7 @@ export default function UserInfo({
   useEffect(() => {
     form.setFieldsValue(
       defaultValues && {
-        password: defaultValues?.email,
+        password: HIDEN_PASSWORD,
         username: defaultValues?.email,
         firstname: defaultValues?.surname,
         name: defaultValues?.name,
@@ -76,7 +76,11 @@ export default function UserInfo({
             </Form.Item>
             <div className={styles.password}>
               <Form.Item label='Mật khẩu' colon={false} name='password'>
-                <Input.Password bordered={false} readOnly />
+                <Input.Password
+                  visibilityToggle={false}
+                  bordered={false}
+                  readOnly
+                />
               </Form.Item>
               <Tooltip placement='right' title='Đổi mật khẩu'>
                 <Button

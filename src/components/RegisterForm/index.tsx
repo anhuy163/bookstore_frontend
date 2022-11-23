@@ -15,10 +15,7 @@ export default function RegisterForm({ loading, ...props }) {
   const [form] = Form.useForm();
 
   const rules = {
-    username: [
-      { required: true, message: "Vui lòng điền tài khoản" },
-      { whitespace: true },
-    ],
+    username: [{ required: true, message: "Vui lòng điền tài khoản" }],
     password: [
       { required: true, message: "Vui lòng điền mật khẩu" },
       { min: 8, message: "Mật khẩu ít nhất phải có 8 ký tự" },
@@ -47,7 +44,11 @@ export default function RegisterForm({ loading, ...props }) {
           label='Tài khoản'
           colon={false}
           name='username'
-          rules={rules.username}>
+          // rules={rules.username}
+          rules={[
+            { type: "email", message: "Email không hợp lệ" },
+            { required: true, message: "Vui lòng điền tài khoản" },
+          ]}>
           <Input addonBefore={<UserOutlined />} allowClear />
         </Form.Item>
         <Form.Item

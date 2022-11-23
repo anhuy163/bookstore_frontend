@@ -29,9 +29,12 @@ export const BREADCRUMB_NAME_MAPPING = {
 /*AVATAR SIZE*/
 
 export const AVATAR_SIZE = {
-  small: 40,
+  small: 50,
   large: 150,
 };
+
+/*HIDEN_PASSWORD */
+export const HIDEN_PASSWORD = "********";
 
 /*CARD_DUMMY_DATA*/
 export const SKILL_BOOKS = [

@@ -9,8 +9,9 @@ import {
   Badge,
   Typography,
   Button,
+  Tooltip,
 } from "antd";
-import { ShoppingCartOutlined } from "@ant-design/icons";
+import { ShoppingCartOutlined, LogoutOutlined } from "@ant-design/icons";
 const { Header } = Layout;
 import styles from "./styles.module.less";
 import "antd/dist/antd.css";
@@ -39,14 +40,14 @@ export default function HeaderPC() {
   const user = useAppSelector((state) => state.user);
   const currentUser = localStorage.getItem("currentUser");
   const router = useRouter();
-  console.log(cart);
+  // console.log(cart);
 
   const { logout } = useAuth();
 
   const handleRedirectToLogin = () => {
     window.location.replace(LOGIN_PATH);
   };
-  const handleOnLogout = async () => {
+  const handleOnLogout = () => {
     logout();
   };
 
@@ -66,7 +67,7 @@ export default function HeaderPC() {
   return (
     <Header className={styles.header}>
       <Row>
-        <Col flex={18} className={styles.searchArea}>
+        <Col flex={36} className={styles.searchArea}>
           <Input.Search
             placeholder='Tìm kiếm'
             allowClear
@@ -75,7 +76,7 @@ export default function HeaderPC() {
             onSearch={handleOnBookSearch}
           />
         </Col>
-        <Col flex={6}>
+        <Col flex={4}>
           {!!currentUser ? (
             <FormWrapper>
               <div className={styles.profileArea}>
@@ -89,20 +90,31 @@ export default function HeaderPC() {
                     </Badge>
                   </div>
                 </Link>
-                <div className={styles.avatar}>
-                  <UserAvatar
-                    size={AVATAR_SIZE.small}
-                    text={user?.name}
-                    link={PROFILE_PATH}
-                    src={user?.avatar}
-                  />
-                </div>
-                <div className={styles.userNameArea}>
-                  <Dropdown overlay={profileMenu} trigger={["click"]}>
+                <div className={styles.rightProfileArea}>
+                  <div className={styles.avatar}>
+                    <UserAvatar
+                      size={AVATAR_SIZE.small}
+                      text={user?.name}
+                      link={PROFILE_PATH}
+                      src={user?.avatar}
+                    />
+                  </div>
+                  <div className={styles.userNameArea}>
+                    {/* <Dropdown overlay={profileMenu} trigger={["click"]}> */}
                     <div className={styles.userName}>
                       {user?.surname} {user?.name}
                     </div>
-                  </Dropdown>
+                    {/* </Dropdown> */}
+                  </div>
+                  <div className={styles.logout}>
+                    <Tooltip title='Đăng xuất'>
+                      <Button
+                        className={styles.logoutBtn}
+                        icon={<LogoutOutlined />}
+                        onClick={handleOnLogout}
+                      />
+                    </Tooltip>
+                  </div>
                 </div>
               </div>
             </FormWrapper>

@@ -21,26 +21,26 @@ export default function Profile() {
       key: "1",
       children: <UserInfoContainer />,
     },
-    {
-      label: (
-        <span>
-          <HighlightOutlined />
-          Đánh giá
-        </span>
-      ),
-      key: "2",
-      children: <>Đánh giá của người dùng</>,
-    },
-    {
-      label: (
-        <span>
-          <CopyOutlined />
-          Đã lưu
-        </span>
-      ),
-      key: "3",
-      children: <>Nội dung đã lưu</>,
-    },
+    // {
+    //   label: (
+    //     <span>
+    //       <HighlightOutlined />
+    //       Đánh giá
+    //     </span>
+    //   ),
+    //   key: "2",
+    //   children: <>Đánh giá của người dùng</>,
+    // },
+    // {
+    //   label: (
+    //     <span>
+    //       <CopyOutlined />
+    //       Đã lưu
+    //     </span>
+    //   ),
+    //   key: "3",
+    //   children: <>Nội dung đã lưu</>,
+    // },
   ];
   return (
     <CardWrapper>

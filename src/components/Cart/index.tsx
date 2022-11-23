@@ -51,7 +51,7 @@ export default function Cart({
   };
 
   const handleOnDeleteBooks = () => {
-    onDeleteBooks(selectedRowKeys);
+    onDeleteBooks(selectedRowKeys).then(() => setSelectedRowKeys([]));
   };
 
   const handleOnStatusChange = (status, id) => {

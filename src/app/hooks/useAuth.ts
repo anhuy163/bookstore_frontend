@@ -49,7 +49,19 @@ const useAuth = () => {
     }
   };
 
-  return { loading, login, logout };
+  const logoutAfterChangePassword = async () => {
+    try {
+      localStorage.removeItem("token");
+      localStorage.removeItem("currentUser");
+      localStorage.removeItem("cart");
+      window.location.replace(LOGIN_PATH);
+    } catch (error) {
+      console.log(error);
+      dispatch(deleteUser());
+    }
+  };
+
+  return { loading, login, logout, logoutAfterChangePassword };
 };
 
 export default useAuth;

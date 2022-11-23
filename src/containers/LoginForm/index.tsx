@@ -4,7 +4,7 @@ import useAuth from "../../app/hooks/useAuth";
 import { HOME_PATH, BOOK_PATH } from "../../constants";
 import { setUser } from "../../app/redux/slices/userSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks/useRedux";
-import { showErrorMessage } from "../../app/helpers/messageHelper";
+import { showErrorLoginMessage } from "../../app/helpers/messageHelper";
 
 export default function LoginFormContainer() {
   const user = useAppSelector((state) => state.user);
@@ -19,7 +19,7 @@ export default function LoginFormContainer() {
       .then((res) => {
         console.log(res);
         if ((res as any)?.data.code !== 0) {
-          showErrorMessage((res as any).data.data);
+          showErrorLoginMessage((res as any).data.data);
           return;
         }
         localStorage.setItem(

@@ -2,7 +2,10 @@
   background-color: white;
   padding: 0 20px;
   width: 100%;
+  // display: flex;
+  // align-items: center;
   .searchArea {
+    // width: 70%;
     align-items: center;
     display: flex;
     :global {
@@ -63,7 +66,7 @@
       height: 56px;
       display: flex;
       align-items: center;
-      margin: 0 45px 0 45px;
+      margin: 0 0px 0 45px;
       cursor: pointer;
       .cartTitle {
         font-size: 18px;
@@ -80,20 +83,38 @@
     }
     display: flex;
     align-items: center;
-    // justify-content: space-around;
-    .userNameArea {
-      .userName {
-        font-size: 20px;
-        font-weight: 500;
-        &:hover {
-          cursor: pointer;
+    justify-content: space-between;
+    .rightProfileArea {
+      display: flex;
+      align-items: center;
+      margin-right: 10px;
+      .userNameArea {
+        .userName {
+          font-size: 24px;
+          font-weight: 500;
+          color: #439ba8;
+          margin-left: 20px;
         }
       }
-    }
-    .avatar {
-      margin-right: 20px;
-      margin-left: 40px;
-      cursor: pointer;
+      .avatar {
+        // margin-right: 20px;
+        margin-left: 40px;
+        cursor: pointer;
+      }
+      .logout {
+        margin-left: 20px;
+        .logoutBtn {
+          height: 40px;
+          width: 40px;
+          border-radius: 50% !important;
+          background-color: #70c4d1;
+          border: none;
+          color: white;
+          &:hover {
+            background-color: #439ba8;
+          }
+        }
+      }
     }
   }
 }

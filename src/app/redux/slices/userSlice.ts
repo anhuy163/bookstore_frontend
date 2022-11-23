@@ -31,7 +31,7 @@ export const userSlice = createSlice({
       // state.surname = payload?.surname;
       // state.name = payload?.name;
       // state.phone = payload?.phone;
-      console.log(payload);
+      // console.log(payload);
       return {
         ...state,
         email: payload?.email,

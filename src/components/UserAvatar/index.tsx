@@ -1,7 +1,8 @@
 import { Avatar } from "antd";
-import { AVATAR_SIZE } from "../constants";
+import { AVATAR_SIZE } from "../../constants";
 import Link from "next/link";
-import { getFirstLetterOfName } from "../app/helpers/textHelper";
+import { getFirstLetterOfName } from "../../app/helpers/textHelper";
+import styles from "./styles.module.less";
 
 export default function UserAvatar({
   size,
@@ -18,6 +19,7 @@ export default function UserAvatar({
             color: "#f56a00",
             backgroundColor: "#fde3cf",
             fontSize: size === AVATAR_SIZE.large ? "100px" : "24px",
+            border: "0.1px solid rgb(170, 164, 164)",
           }}
           size={size}
           src={!!base64ImgUrl ? base64ImgUrl : src}
@@ -28,6 +30,7 @@ export default function UserAvatar({
             color: "#f56a00",
             backgroundColor: "#fde3cf",
             fontSize: size === AVATAR_SIZE.large ? "100px" : "24px",
+            border: "0.1px solid rgb(170, 164, 164)",
             // alignItems: "center",
           }}
           size={size}
@@ -38,6 +41,7 @@ export default function UserAvatar({
     </Link>
   ) : (
     <Avatar
+      className={styles.avatar}
       style={{
         color: "#f56a00",
         backgroundColor: "#fde3cf",

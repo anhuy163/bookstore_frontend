@@ -24,7 +24,7 @@ const useMutationAddBook = () => {
 
   const { isLoading: loading, mutateAsync } = useMutation({
     mutationFn: (body) => mutationFn(body),
-    onSuccess: async () => {
+    onSuccess: () => {
       queryClient.invalidateQueries("useQueryGetCart");
       showSuccessMessage("Cập nhật giỏ hàng thành công");
       fetchCart(true).then(() => {

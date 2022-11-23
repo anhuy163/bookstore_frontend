@@ -38,11 +38,6 @@ export default function BookDetail({
   cart,
 }) {
   const user = useAppSelector((state) => state.user);
-  // const cart = useAppSelector((state) => state.cart);
-  // console.log(comments);
-  // console.log(cart);
-  // console.log(process.env.NEXT_PUBLIC_PUBLIC_PASSWORD);
-
   const router = useRouter();
   const [number, setNumber] = useState<number>(1);
   const [togglePopupPostCmt, setTogglePopupPostCmt] = useState(false);
@@ -118,9 +113,9 @@ export default function BookDetail({
                   icon={<CommentOutlined />}>
                   Đánh giá
                 </Button>
-                <Button className={styles.saveButton} icon={<CopyOutlined />}>
+                {/* <Button className={styles.saveButton} icon={<CopyOutlined />}>
                   Lưu
-                </Button>
+                </Button> */}
               </div>
               <div className={styles.addArea}>
                 <InputNumber
