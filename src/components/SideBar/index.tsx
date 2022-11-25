@@ -16,6 +16,7 @@ import {
   HOME_PATH,
   PROFILE_PATH,
   BOOK_PATH,
+  ORDER_PATH,
 } from "../../constants";
 import { useAppSelector } from "../../app/hooks/useRedux";
 import useQueryGetBookCategories from "../../app/hooks/useQueryGetBookCategories";
@@ -36,29 +37,20 @@ export default function Sidebar() {
   const keyMapping = {
     home: HOME_PATH,
     profile: PROFILE_PATH,
+    order: ORDER_PATH,
   };
-  // useEffect(() => {
-  //   const categoryId = Number(router.query.categoryId);
-  //   if (categoryId >= 552 && categoryId <= 554) {
-  //     setDefaultOpenKeys((prevState) => [...prevState, "544"]);
-  //   } else if (categoryId >= 555 && categoryId <= 557) {
-  //     setDefaultOpenKeys((prevState) => [...prevState, "545"]);
-  //   } else if (categoryId >= 558 && categoryId <= 560) {
-  //     setDefaultOpenKeys((prevState) => [...prevState, "546"]);
-  //   } else if (categoryId >= 561 && categoryId <= 562) {
-  //     setDefaultOpenKeys((prevState) => [...prevState, "547"]);
-  //   } else if (categoryId >= 564 && categoryId <= 565) {
-  //     setDefaultOpenKeys((prevState) => [...prevState, "548"]);
-  //   } else if (categoryId >= 566 && categoryId <= 567) {
-  //     setDefaultOpenKeys((prevState) => [...prevState, "549"]);
-  //   } else if (categoryId >= 568 && categoryId <= 570) {
-  //     setDefaultOpenKeys((prevState) => [...prevState, "550"]);
-  //   }
-  // }, [router.query.categoryId]);
 
   const handleOnRedirectToProfile = () => {
     if (user) {
       router.push(PROFILE_PATH);
+    } else {
+      window.location.replace(LOGIN_PATH);
+    }
+  };
+
+  const handleOnRedirectToOrder = () => {
+    if (user) {
+      router.push(ORDER_PATH);
     } else {
       window.location.replace(LOGIN_PATH);
     }
@@ -91,7 +83,9 @@ export default function Sidebar() {
             onClick={handleOnRedirectToProfile}>
             THÔNG TIN
           </Menu.Item>
-          <Menu.Item>ĐƠN HÀNG</Menu.Item>
+          <Menu.Item key={keyMapping.order} onClick={handleOnRedirectToOrder}>
+            ĐƠN HÀNG
+          </Menu.Item>
         </Menu.SubMenu>
 
         <Menu.SubMenu key={"genre"} title='THỂ LOẠI' icon={<MenuOutlined />}>

@@ -1,0 +1,88 @@
+.container {
+  //   padding: 20px;
+
+  max-height: 200px !important;
+  :global {
+    .ant-form-item-label {
+      background-color: rgb(243, 241, 241);
+      margin-right: 10px;
+      padding: 0 10px;
+      text-align: center;
+      max-height: 32px;
+      min-width: 200px;
+      & > label {
+        color: rgba(105, 190, 201, 1);
+        font-size: 16px;
+        font-weight: 400;
+      }
+    }
+    .ant-form-item-label
+      > label.ant-form-item-required:not(.ant-form-item-required-mark-optional):before {
+      content: "";
+    }
+    .ant-form-item-label
+      > label.ant-form-item-required:not(.ant-form-item-required-mark-optional):after {
+      display: inline-block;
+      margin-right: 1px;
+      color: #ff4d4f;
+      font-size: 14px;
+      font-family: SimSun, sans-serif;
+      line-height: 1;
+      content: "*";
+    }
+  }
+  .orderBookDetail {
+    .bookDetail {
+      border: 1px solid #70c4d1;
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      margin-bottom: 5px;
+      //   justify-content: center;
+      .orderBookImage {
+        width: 130px !important;
+        height: 200px !important;
+      }
+      .bookPriceAndQuantity {
+        margin-left: 30px;
+        .orderBookName {
+          font-size: 24px;
+          display: inline-block;
+          word-wrap: break-word;
+          white-space: normal;
+          overflow: hidden;
+          display: -webkit-box;
+          text-overflow: ellipsis;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+        }
+        .orderBookQuantity {
+          color: #70c4d1;
+          font-size: 20px;
+        }
+        .orderBookPrice {
+          color: red;
+          font-size: 18px;
+        }
+      }
+    }
+  }
+  .orderInforDetail {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;
+    .orderInforPrice {
+      display: flex;
+      align-items: center;
+      font-size: 24px;
+      color: #ff4d4f;
+    }
+    .orderInforQuantity {
+      display: flex;
+      align-items: center;
+      font-size: 24px;
+      color: #70c4d1;
+    }
+  }
+}

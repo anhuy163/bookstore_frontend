@@ -9,7 +9,7 @@ import { useAppDispatch } from "./useRedux";
 
 const mutationFn = (body): any => {
   const arrayString = convertNumberArray(body);
-  console.log(arrayString);
+  // console.log(arrayString);
 
   return axios.delete(`${SERVER_LINK}/cart?bookIds=${arrayString}`, {
     headers: {

@@ -16,6 +16,7 @@ export const CULTURE_BOOK_PATH = "";
 export const FAMILY_BOOK_PATH = "";
 export const TEXT_BOOK_PATH = "";
 export const SEARCH_PATH = "/search";
+export const ORDER_PATH = "/orders";
 
 /*BREADCRUMB NAME MAP*/
 

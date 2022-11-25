@@ -19,14 +19,14 @@ export default function BookDetailContainer({ bookId = undefined }) {
   const dispatch = useAppDispatch();
   const cart = useAppSelector((state) => state.cart);
   const onAddBookToCart = (book) => {
-    console.log(book);
+    // console.log(book);
 
     // dispatch(addToCart(book));
     addBook({ bookId: book.bookId, quantity: book.quantity });
   };
 
   const handleOnPostComment = (value, callback: () => void) => {
-    console.log(value);
+    // console.log(value);
     postComment(value).then(() => {
       () => callback;
     });

@@ -1,17 +1,15 @@
 import LayoutContainer from "../../src/containers/Layout";
-import MyBreadcrumb from "../../src/components/MyBreadcrumb";
 import CardWrapper from "../../src/components/CardWrapper";
-import CartContainer from "../../src/containers/Cart";
 import Error from "next/error";
+import ListOrdersContainer from "../../src/containers/ListOrders";
 
-export default function CartPage() {
+export default function OrderPage() {
   return !!(
     typeof window !== "undefined" && localStorage.getItem("currentUser")
   ) ? (
-    <LayoutContainer title='Giỏ hàng'>
-      {/* <MyBreadcrumb /> */}
+    <LayoutContainer title='Đơn hàng'>
       <CardWrapper>
-        <CartContainer />
+        <ListOrdersContainer />
       </CardWrapper>
     </LayoutContainer>
   ) : (

@@ -12,11 +12,12 @@ import {
 } from "antd";
 import { formatMoney } from "../../app/helpers/moneyhelper";
 import FormWrapper from "../FormWrapper";
-
+import PopupPayCartContainer from "../../containers/PopupPayCart";
 import styles from "./styles.module.less";
 import { AlignType, FixedType } from "rc-table/lib/interface";
 import { useAppSelector } from "../../app/hooks/useRedux";
 import { useState } from "react";
+import { DeleteOutlined, PayCircleOutlined } from "@ant-design/icons";
 
 export default function Cart({
   defaultValues,
@@ -38,6 +39,16 @@ export default function Cart({
     onChange: (selectedRowKeys) => {
       setSelectedRowKeys(selectedRowKeys);
     },
+  };
+
+  const [togglePopupPayCart, setTogglePopupPayCart] = useState(false);
+
+  const onOpenPopupPayCart = () => {
+    setTogglePopupPayCart(true);
+  };
+
+  const cancelPopupPayCart = () => {
+    setTogglePopupPayCart(false);
   };
 
   const handleOnBookUpdate = (value, bookId, oldQuantity) => {
@@ -152,37 +163,52 @@ export default function Cart({
   };
 
   return (
-    <div className={styles.cartTable}>
-      <Typography className={styles.cartTitle}>Giỏ hàng của bạn</Typography>
-      <Button
-        onClick={handleOnDeleteBooks}
-        type='primary'
-        disabled={selectedRowKeys.length ? false : true}
-        className={styles.deleteBtn}>
-        Xóa
-      </Button>
-      <FormWrapper loading={loading}>
-        <Table
-          rowKey={"bookId"}
-          rowSelection={rowSelection}
-          locale={{
-            triggerDesc: "Nhấn để sắp xếp giảm dần",
-            triggerAsc: "Nhấn để sắp xếp tăng dần",
-            cancelSort: "Nhấn để hủy sắp xếp",
-          }}
-          pagination={false}
-          scroll={{ x: 1500 }}
-          bordered
-          dataSource={defaultValues}
-          columns={generateColumns()}
-        />
-      </FormWrapper>
-      <Typography className={styles.cartValueTitle}>
-        Tổng:{" "}
-        <Typography className={styles.cartValue}>
-          {totalPrice ? formatMoney(totalPrice) : ""}
+    <>
+      <div className={styles.cartTable}>
+        <Typography className={styles.cartTitle}>Giỏ hàng của bạn</Typography>
+        <Button
+          icon={<DeleteOutlined />}
+          onClick={handleOnDeleteBooks}
+          type='primary'
+          disabled={selectedRowKeys.length ? false : true}
+          className={styles.deleteBtn}>
+          Xóa
+        </Button>
+        <Button
+          icon={<PayCircleOutlined />}
+          type='primary'
+          className={styles.payBtn}
+          disabled={!totalPrice}
+          onClick={onOpenPopupPayCart}>
+          Thanh Toán
+        </Button>
+        <FormWrapper loading={loading}>
+          <Table
+            rowKey={"bookId"}
+            rowSelection={rowSelection}
+            locale={{
+              triggerDesc: "Nhấn để sắp xếp giảm dần",
+              triggerAsc: "Nhấn để sắp xếp tăng dần",
+              cancelSort: "Nhấn để hủy sắp xếp",
+            }}
+            pagination={false}
+            scroll={{ x: 1500 }}
+            bordered
+            dataSource={defaultValues}
+            columns={generateColumns()}
+          />
+        </FormWrapper>
+        <Typography className={styles.cartValueTitle}>
+          Tổng:{" "}
+          <Typography className={styles.cartValue}>
+            {totalPrice ? formatMoney(totalPrice) : ""}
+          </Typography>
         </Typography>
-      </Typography>
-    </div>
+      </div>
+      <PopupPayCartContainer
+        open={togglePopupPayCart}
+        onCancel={cancelPopupPayCart}
+      />
+    </>
   );
 }
