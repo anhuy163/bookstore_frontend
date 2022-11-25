@@ -10,7 +10,7 @@ import useMutationAddBook from "../../app/hooks/useMutationAddBook";
 export default function BookDetailContainer({ bookId = undefined }) {
   const router = useRouter();
   const { id } = router.query;
-  const { data, loading, error } = useQueryGetBookById(id);
+  const { data, loading: gettingBook, error } = useQueryGetBookById(id);
   const { doMutation: addBook, loading: addingBook } = useMutationAddBook();
   const { doMutation: postComment, loading: postingComment } =
     useMutationPostComment(id);
@@ -38,7 +38,7 @@ export default function BookDetailContainer({ bookId = undefined }) {
       onAdd={onAddBookToCart}
       comments={comments}
       onPostComment={handleOnPostComment}
-      loading={postingComment || gettingComments}
+      loading={postingComment || gettingComments || gettingBook}
     />
   );
 }

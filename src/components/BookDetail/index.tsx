@@ -81,7 +81,9 @@ export default function BookDetail({
     rate: 1.5,
     content: "Nothing interesting Nothing interesting Nothing interesting",
   }));
-  return (
+  return !!loading ? (
+    <FormWrapper loading={loading}> </FormWrapper>
+  ) : (
     // <FormWrapper loading={loading}>
     <div className={styles.detailWrapper}>
       <div className={styles.bookDescription}>

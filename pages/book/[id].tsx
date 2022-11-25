@@ -8,7 +8,7 @@ export default function BookDetailPage() {
 
   return (
     <LayoutContainer title={"Chi tiet"}>
-      <MyBreadcrumb paths={paths} />
+      {/* <MyBreadcrumb paths={paths} /> */}
       <CardWrapper>
         <BookDetailContainer />
       </CardWrapper>
