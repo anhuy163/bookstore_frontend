@@ -17,6 +17,7 @@ import {
   PROFILE_PATH,
   BOOK_PATH,
   ORDER_PATH,
+  SIDE_BAR_MENU,
 } from "../../constants";
 import { useAppSelector } from "../../app/hooks/useRedux";
 import useQueryGetBookCategories from "../../app/hooks/useQueryGetBookCategories";
@@ -25,7 +26,7 @@ import { useState, useEffect } from "react";
 const { Sider } = Layout;
 
 export default function Sidebar() {
-  const { data, loading, error } = useQueryGetBookCategories();
+  // const { data, loading, error } = useQueryGetBookCategories();
   // console.log(data);
 
   const [defaultOpenKeys, setDefaultOpenKeys] = useState(["personal", "genre"]);
@@ -89,7 +90,7 @@ export default function Sidebar() {
         </Menu.SubMenu>
 
         <Menu.SubMenu key={"genre"} title='THỂ LOẠI' icon={<MenuOutlined />}>
-          {data?.map((item) => (
+          {SIDE_BAR_MENU?.map((item) => (
             <Menu.SubMenu key={item?.id} title={item?.name.toUpperCase()}>
               {item?.subCategories.map((category) => (
                 <Menu.Item
