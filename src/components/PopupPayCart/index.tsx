@@ -86,9 +86,13 @@ export default function PopupPayCart({ data, loading, onFinish, ...props }) {
         <Form.Item label='Số điện thoại' name={"phone"} rules={rules.phone}>
           <Input />
         </Form.Item>
-        <div>
-          <Button onClick={props.onCancel}>Hủy</Button>
-          <Button htmlType='submit'>Xác nhận</Button>
+        <div className={styles.btnArea}>
+          <Button className={styles.cancelBtn} onClick={props.onCancel}>
+            Hủy
+          </Button>
+          <Button className={styles.confirmBtn} htmlType='submit'>
+            Xác nhận
+          </Button>
         </div>
       </Form>
     </FormWrapper>
