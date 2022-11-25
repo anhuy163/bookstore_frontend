@@ -13,7 +13,7 @@ const config = {
 const useUploadAvatar = () => {
   const ReactS3Client = new S3(config);
   const uploadAvatar = async (file) => {
-    console.log(file.name);
+    // console.log(file.name);
 
     try {
       const res = await ReactS3Client.uploadFile(

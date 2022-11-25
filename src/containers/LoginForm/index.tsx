@@ -8,16 +8,16 @@ import { showErrorLoginMessage } from "../../app/helpers/messageHelper";
 
 export default function LoginFormContainer() {
   const user = useAppSelector((state) => state.user);
-  console.log(user);
+  // console.log(user);
 
   const dispatch = useAppDispatch();
   const { loading: isLoggingIn, login: handleOnLogin } = useAuth();
   const router = useRouter();
   const handleOnSubmit = async (value) => {
-    console.log(value);
+    // console.log(value);
     handleOnLogin({ email: value?.email, password: value?.password })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if ((res as any)?.data.code !== 0) {
           showErrorLoginMessage((res as any).data.data);
           return;

@@ -52,7 +52,7 @@ export default function Cart({
   };
 
   const handleOnBookUpdate = (value, bookId, oldQuantity) => {
-    console.log(value, oldQuantity);
+    // console.log(value, oldQuantity);
 
     onAddBook({
       bookId,

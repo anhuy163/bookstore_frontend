@@ -25,7 +25,7 @@ export default function UserInfoContainer() {
     try {
       setUploadingAvatar(true);
       const res = await uploadAvatar(image);
-      console.log(res);
+      // console.log(res);
       setUploadingAvatar(false);
       return res?.location;
     } catch (error) {
