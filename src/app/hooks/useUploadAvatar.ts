@@ -3,11 +3,11 @@ import { createRandomImageKey } from "../helpers/textHelper";
 
 const config = {
   bucketName: "bookstoreimages",
+  dirName: "avatar",
   region: "us-east-1",
   accessKeyId: process.env.NEXT_PUBLIC_ACCESS_KEY,
   secretAccessKey: process.env.NEXT_PUBLIC_SECRET_KEY,
-  s3Url: "https://bookstoreimages.s3.amazonaws.com/",
-  dirName: "avatar",
+  s3Url: "https://bookstoreimages.s3.amazonaws.com",
 };
 
 const useUploadAvatar = () => {
